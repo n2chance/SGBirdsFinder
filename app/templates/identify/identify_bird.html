@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}Identify a Bird{% endblock %}
+
+{% block content %}
+    <div class="columns" style="margin: 3em 2em;">
+        <div class="column is-one-third">
+            <div class="box">
+                <h1 class="title">Start by answering 5 questions</h1>
+                <p>The more information given, the better the results (try to answer at least 3 questions)</p>
+            </div>
+        </div>
+        <div class="column">
+            <div class="box">
+                <form action="/identify" method="post" style="margin:auto;">
+                    <div class="field">
+                        <label class="label">{{qns[0].askQn}}</label>
+                        <div class="control">
+                            <div class="select">
+                                <select name="{{qns[0].name}}">
+                                    {%for option in qns[0].options%}
+                                        <option value="{{option}}">{{qns[0].options[option]}}</option>
+                                    {%endfor%}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">{{qns[1].askQn}}</label> <!-- radio with pics-->
+                            {%for option in qns[1].options%}
+                                <div class="control">
+                                    <label class="radio">
+                                        <input type="radio" name="{{qns[1].name}}" value="{{option}}">
+                                        {{qns[1].options[option]}}
+                                    </label>
+                                </div>
+                            {%endfor%}
+                    </div>
+                    <div class="field">
+                        <label class="label">{{qns[2].askQn}}</label> <!-- checkboxes with colours-->
+                        {%for option in qns[2].options%}
+                            <div class="control">
+                                <label class="checkbox" >
+                                    <input type="checkbox" name="{{option}}" value="{{qns[2].options[option]}}">
+                                    {{qns[2].options[option].capitalize()}}
+                                </label>
+                            </div>
+                        {%endfor%}
+                    </div>
+                    <div class="field">
+                        <label class="label">{{qns[3].askQn}}</label> <!-- dropdown-->
+                        <div class="control">
+                            <div class="select">
+                                <select name="action">
+                                    {%for option in qns[3].options%}
+                                        <option value="{{option}}">{{qns[3].options[option]}}</option>
+                                    {%endfor%}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button type="submit" class="button is-link">Submit</button>
+                        </div>
+                        <div class="control">
+                            <button type="reset" class="button is-link is-light">Clear</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

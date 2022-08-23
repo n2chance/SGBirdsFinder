@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <form action="{{ url_for('auth_bp.verify') }}" method="post" class="box" style="width: 60%; margin:3rem auto">
+        <div class="field">
+            <label class="label">Username</label>
+            <div class="control">
+            <input class="input" type="text" name="user" placeholder="User">
+            </div>
+        </div>
+        
+        <div class="field">
+            <label class="label">Password</label>
+            <div class="control">
+            <input class="input" type="password" name="pwd" placeholder="********">
+            </div>
+        </div>
+        
+        <div class="field is-grouped">
+            <div class="control">
+                <button type="Submit" class="button is-primary">Sign in</button>
+            </div>
+            <div class="control">
+                <button type="reset" class="button is-link is-light">Clear</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

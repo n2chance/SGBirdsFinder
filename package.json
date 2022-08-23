@@ -1,0 +1,17 @@
+{
+  "name": "sgbirdsfinder",
+  "version": "1.0.0",
+  "description": "A program to identify birds in Singaopre",
+  "main": "app/static/sass/styles.css",
+  "scripts": {
+    "css-build": "node-sass --omit-source-map-url app/static/sass/styles.scss app/static/stylesheets/styles.css",
+    "css-watch": "npm run css-build -- --watch",
+    "start": "npm run css-watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "bulma": "^0.9.4",
+    "node-sass": "^7.0.1"
+  }
+}

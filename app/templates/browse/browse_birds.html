@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+    <div class="box" style="margin: 3em auto; width:70%"> 
+        <table class="table is-striped" style="margin: auto;">
+            <thead>
+                <th>No.</th>
+                <th>Common Name</th>
+                <th>Scientific Name</th>
+                <th>Family</th>
+            </thead>
+            <tbody>
+                {% for bird in allbirds %}
+                <tr>
+                    <td>{{bird[0]}}</td>
+                    <td><a href="/bird/{{bird[0]}}">{{bird[1]}}</a></td>
+                    <td>{{bird[2]}}</td>
+                    <td>{{bird[3]}}</td>
+                </tr>
+                {% endfor %}
+                
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

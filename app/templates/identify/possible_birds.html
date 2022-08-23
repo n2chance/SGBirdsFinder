@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}Birds found{% endblock %}
+
+{% block content %}
+    <div>
+        {%if birdCount == 1%}
+            <section class="hero is-primary">
+                <div class="hero-body">
+                <p class="title">
+                    Your bird has been found!
+                </p>
+                </div>
+            </section>
+            <div class="box">
+                <div class="content">
+                    <p><strong>English name:</strong> {{possBirds[2]}}</p>
+                    <p><strong>Scientific name:</strong> {{possBirds[3]}}</p>
+                    <p><strong>Malay name:</strong> {{possBirds[4]}}</p>
+                    <p><strong>Chinese name:</strong> {{possBirds[5]}}</p>
+                    <p><strong>Rarity status:</strong> {{possBirds[6]}}</p> 
+                    <p>
+                        <strong>Local status:</strong>
+                        {%for i in possBirds[8].split("/")%}
+                            {%if i == possBirds[8].split("/")[-1]%}
+                                {{localStat.get(i)}}
+                            {%else%}
+                                {{localStat.get(i)}}, 
+                            {%endif%}
+                        {%endfor%}
+                    </p>
+                    <p><strong>Identification:</strong> {{possBirds[9]}}</p>
+                    <p><strong>Habitat:</strong> {{possBirds[10]}}</p>
+                    
+                    {%if possBirds[11]%}
+                        <p><strong>Behaviour:</strong> {{possBirds[11]}}</p>
+                    {%endif%}
+
+                    {%if not possBirds[12]%}
+                        {{pass}}
+                    {%elif possBirds[12]==possBirds[13]%}
+                        <p><strong>Size:</strong> {{possBirds[12]}}cm</p>
+                    {%else%}
+                        <p><strong>Size:</strong> {{possBirds[12]}} - {{possBirds[13]}}cm</p>
+                    {%endif%}
+                </div>
+                <div style="margin: 1em">
+                    <a style="margin:auto 3em" class="button is-link" href="{{url_for('id_bp.identify_get')}}}">Identify another bird</a>
+                </div>
+            </div>
+        {%elif birdCount > 1%}
+            <section class="hero is-primary">
+                <div class="hero-body">
+                <p class="title">
+                    There are {{birdCount}} possible birds matching your criteria
+                </p>
+                </div>
+            </section>
+            <div class="box" style="margin: 3em auto; width:70%
+            ">
+                <table class="table is-striped" style="margin: auto;">
+                    <thead>
+                        <th>No.</th>
+                        <th>Common Name</th>
+                        <th>Family</th>
+                        <th>Scientific Name</th>
+                    </thead>
+                    <tbody>
+                        {%for bird in possBirds%}
+                        <tr>
+                            <td>{{bird[0]}}</td>
+                            <td><a href="/bird/{{bird[0]}}">{{bird[1]}}</a></td>
+                            <td>{{bird[2]}}</td>
+                            <td>{{bird[3]}}</td>
+                        </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+                <a style="margin: auto" class="button is-link" href="{{url_for('id_bp.identify_get')}}">Identify another bird</a>
+            </div>
+        {%endif%}
+    </div>
+{% endblock %}

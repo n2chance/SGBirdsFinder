@@ -1,0 +1,24 @@
+from flask import Blueprint, render_template, g
+import sqlite3
+
+browse_bp = Blueprint('browse_bp', __name__, template_folder='templates/browse')
+
+DATABASE = 'Birds.db'
+def get_db():
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect(DATABASE)
+    return db
+
+@browse_bp.route("",methods=["GET"])
+def browse():
+    cur = get_db().cursor()
+    cur.execute("SELECT Num, EngName, SciName, Family FROM Birds")
+    allbirds = cur.fetchall()
+    return render_template("browse_birds.html", allbirds=allbirds)
+
+@browse_bp.teardown_request
+def close_connection(exception):
+    db = getattr(g, '_database', None)
+    if db is not None:
+        db.close()
