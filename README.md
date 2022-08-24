@@ -59,8 +59,9 @@ Go to (website). Refer to the about page for more usage instructions.
     └── generate-credentials.py
 ```
 
-The app is split into 6 main parts or features:
+The app is split into 7 main parts or features:
 
+- Administering the database (admin)
 - Authentication (auth)
 - Browsing the database of birds (browse)
 - Handling errors which could occur, e.g: 404 (errors)
@@ -79,7 +80,7 @@ The following npm dependencies should also be installed to generate the CSS file
 - bulma
 - node-sass
 
-Finally, run `app.py`
+Finally, run `app.py` from the app folder.
 
 ## Credits
 
