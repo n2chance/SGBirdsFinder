@@ -8,10 +8,13 @@
         <h1 class="subtitle">{{birdInfo[3]}}</h1>
         <!-- img here -->
         <div class="content">
+            <h2 class="title is-4">Names</h2>
             <p><strong>English name:</strong> {{birdInfo[2]}}</p>
             <p><strong>Scientific name:</strong> {{birdInfo[3]}}</p>
             <p><strong>Malay name:</strong> {{birdInfo[4]}}</p>
             <p><strong>Chinese name:</strong> {{birdInfo[5]}}</p>
+
+            <h2 class="title is-4">Description</h2>
             <p><strong>Rarity status:</strong> {{birdInfo[6]}}</p> 
             <p>
                 <strong>Local status:</strong>
@@ -37,6 +40,15 @@
             {%else%}
                 <p><strong>Size:</strong> {{birdInfo[12]}} - {{birdInfo[13]}}cm</p>
             {%endif%}
+
+            <h2 class="title is-4">External Links</h2>
+                <ul>
+                    {% for link in links %}
+                        <li>
+                            <a href="{{ links[link] }}">{{ link }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
         </div>
     </div>
 {% endblock %}
