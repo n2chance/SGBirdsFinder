@@ -12,7 +12,7 @@
         </div>
         <div class="column">
             <div class="box">
-                <form action="/identify" method="post" style="margin:auto;">
+                <form action="{{ url_for('id_bp.identify_post') }}" method="post" style="margin:auto;">
                     <div class="field">
                         <label class="label">{{qns[0].askQn}}</label>
                         <div class="control">
