@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/styles.css') }}">
 	</head>
 	<body>
-		<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+		<nav class="navbar is-primary" role="navigation" aria-label="main navigation" style="height: 3.5em;">
 			<div class="navbar-brand">
 				<a class="navbar-item" href="{{ url_for('general_bp.welcome') }}">Home</a>
 		    </div>
@@ -16,16 +16,33 @@
 					<a class="navbar-item" href="{{ url_for('id_bp.identify_get') }}">Identify</a>
 					<a class="navbar-item" href="{{ url_for('browse_bp.browse') }}">Browse</a>
 					<a class="navbar-item" href="{{ url_for('general_bp.about') }}">About</a>
-					<div class="navbar-item">
-						<a class="button is-primary is-light" href="{{ url_for('auth_bp.login') }}"><strong>Admin</strong></a>
+					<div class="navbar-item has-dropdown is-hoverable" style="margin-right: 1em;">
+						<a class="navbar-link">
+						  Admin
+						</a>
+						<div class="navbar-dropdown">
+						{% if session.get("isAdmin") == 1 %}
+								<a class="navbar-item" href="{{ url_for('admin_bp.dash') }}">
+									Dashboard
+								</a>
+								<hr class="navbar-divider">
+								<a class="navbar-item" href="{{ url_for('auth_bp.logout') }}">
+									Logout
+								</a>
+						{% else %}
+								<a class="navbar-item" href="{{ url_for('auth_bp.login') }}">
+									Login
+								</a>
+						{% endif %}
+						</div>
 					</div>
 				</div>
 			</div>
         </nav>
 		{% with messages = get_flashed_messages() %}
 			{% if messages %}
-				<div class="box">
-					<ul class=flashes>
+				<div class="box" style="margin-bottom: 0;">
+					<ul class="flashes">
 						{% for message in messages %}
 							<li>{{ message }}</li>
 						{% endfor %}
