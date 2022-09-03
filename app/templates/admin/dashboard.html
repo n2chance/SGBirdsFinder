@@ -3,5 +3,50 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
+    <section class="hero is-primary">
+        <div class="hero-body">
+            <p class="title">
+                Admin Dashboard
+            </p>
+        </div>
+    </section>
 
+    <div class="columns" style="margin: 2em;">
+        <div class="column">
+            <a href="{{ url_for('admin_bp.new') }}">
+                <div class="box">
+                    <span class="icon-text">
+                        <span class="icon">
+                            <i class="fa-solid fa-plus"></i>
+                        </span>
+                        <span>Add a new bird</span>
+                    </span>
+                </div>
+            </a>
+        </div>
+        <div class="column">
+            <a href="{{ url_for('admin_bp.update') }}">
+                <div class="box">
+                    <span class="icon-text">
+                        <span class="icon">
+                            <i class="fa-solid fa-pen"></i>
+                        </span>
+                        <span>Update/Delete a bird</span>
+                    </span>
+                </div>
+            </a>
+        </div>
+        <div class="column">
+            <a href="{{url_for('auth_bp.logout')}}">
+                <div class="box">
+                    <span class="icon-text">
+                        <span class="icon">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        </span>
+                        <span>Logout</span>
+                    </span>
+                </div>
+            </a>
+        </div>
+    </div>
 {% endblock %}

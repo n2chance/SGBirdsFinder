@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}New Bird{% endblock %}
+
+{% block content %}
+    <div class="box" style="margin:3em 6em;">
+        <form action="{{ url_for('admin_bp.new') }}" method="post" style="margin:auto; width: 50em;">
+            <h1 class="title">General Information</h1>
+            <div class="field">
+                <label class="label">English Name</label>
+                <div class="control">
+                    <input class="input" type="text" name="EngName" placeholder="e.g Pacific Reef Heron">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Scientific Name</label>
+                <div class="control">
+                    <input class="input" type="text" name="SciName" placeholder="e.g Egretta sacra">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Malay Name (Optional)</label>
+                <div class="control">
+                    <input class="input" type="text" name="MalName" placeholder="e.g Bangau Batu Pasifik">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Chinese Name (Optional)</label>
+                <div class="control">
+                    <input class="input" type="text" name="ChiName" placeholder="e.g 岩鹭">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Identification</label>
+                <div class="control">
+                    <textarea class="textarea" name="id" placeholder="Appearance of the bird"></textarea>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Habitat</label>
+                <div class="control">
+                    <textarea class="textarea" name="habitat" placeholder="Habitats where the bird is commonly found"></textarea>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Behaviour</label>
+                <div class="control">
+                    <textarea class="textarea" name="behave" placeholder="Special behaviours of the bird"></textarea>
+                </div>
+            </div>
+            
+            <h1 class="title">Information to Identify Bird</h1>
+            
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label">Size Range (cm)</label>
+                </div>
+                <div class="field-body">
+                    <div class="field" style="width: 1em;">
+                        <p class="control">
+                          <input class="input" type="text" placeholder="Min">
+                        </p>
+                        <p class="help">Enter the same length for both fields if only 1 size is known</p>
+                    </div>
+                    <div class="field" style="width: 1em;">
+                        <p class="control">
+                          <input class="input" type="text" placeholder="Max">
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            {% for qn in qns %}
+                <div class="field">
+                    <label class="label">{{qn.askQn}}</label>
+                    {%for option in qn.options%}
+                        <div class="control">
+                            <label class="checkbox" >
+                                <input type="checkbox" name="{{option}}" value="{{qn.options[option]}}">
+                                {{qn.options[option].capitalize()}}
+                            </label>
+                        </div>
+                    {%endfor%}
+                </div>
+            {% endfor %}
+
+            <div class="field is-grouped" style="margin-top: 2em;">
+                <div class="control">
+                    <button type="submit" class="button is-link">Submit</button>
+                </div>
+                <div class="control">
+                    <button type="reset" class="button is-link is-light">Clear</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+{% endblock %}
