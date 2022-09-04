@@ -23,7 +23,7 @@
 						  Admin
 						</a>
 						<div class="navbar-dropdown">
-						{% if session.get("isAdmin") == 1 %}
+						{% if session.get("isAdmin") %}
 								<a class="navbar-item" href="{{ url_for('admin_bp.dash') }}">
 									Dashboard
 								</a>
