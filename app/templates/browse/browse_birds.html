@@ -1,27 +1,72 @@
 {% extends 'base.html' %}
 
-{% block title %}About{% endblock %}
+{% block title %}Browse Birds{% endblock %}
 
 {% block content %}
-    <div class="box" style="margin: 3em auto; width:70%"> 
-        <table class="table is-striped" style="margin: auto;">
-            <thead>
-                <th>No.</th>
-                <th>Common Name</th>
-                <th>Scientific Name</th>
-                <th>Family</th>
-            </thead>
-            <tbody>
-                {% for bird in allbirds %}
-                <tr>
-                    <td>{{bird[0]}}</td>
-                    <td><a href="/bird/{{bird[0]}}">{{bird[1]}}</a></td>
-                    <td>{{bird[2]}}</td>
-                    <td>{{bird[3]}}</td>
-                </tr>
-                {% endfor %}
-                
-            </tbody>
-        </table>
+    <div class="columns" style="margin: 2em;">
+        <div class="column is-one-third">
+            <div class="box">
+                <p class="title">Search the database of 400+ birds</p>
+                <p class="subtitle">Enter a name, scientific name, or family</p>
+
+                <form action="{{ url_for('browse_bp.browse') }}">
+                    <div class="field has-addons">
+                        <div class="control">
+                            <input class="input" type="text" name="query" placeholder="Find a bird">
+                        </div>
+                        <div class="control">
+                            <button class="button is-info" type="submit">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="box"> 
+                {% if allbirds %}
+                    <table class="table is-striped" style="margin: auto;">
+                        <thead>
+                            <th>No.</th>
+                            <th>Common Name</th>
+                            <th>Scientific Name</th>
+                            <th>Family</th>
+                            {% if session.get("isAdmin") %}
+                                <th>Actions</th>
+                            {% endif %}
+                        </thead>
+                        <tbody>
+                            {% for bird in allbirds %}
+                            <tr>
+                                <td>{{ bird[0] }}</td>
+                                <td><a href="/bird/{{bird[0]}}">{{ bird[1] }}</a></td>
+                                <td>{{ bird[2] }}</td>
+                                <td>{{ bird[3] }}</td>
+                                {% if session.get("isAdmin") %}
+                                    <td>
+                                        <a href="{{ url_for('admin_bp.update') }}?num={{ bird[0] }}" style="margin-right: 0.8em;">
+                                            <span class="icon is-medium">
+                                                <i class="fa-regular fa-lg fa-pen-to-square"></i>
+                                            </span>
+                                        </a>
+                                        <a href="{{ url_for('admin_bp.delete') }}?num={{ bird[0] }}">
+                                            <span class="icon is-medium">
+                                                <i class="fa-regular fa-lg fa-trash-can"></i>
+                                            </span>
+                                        </a>
+                                    </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                            
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p class="title">No birds found</p>
+                {% endif %}
+            </div>
+        </div>
     </div>
 {% endblock %}

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, g
+from flask import Blueprint, render_template, g, request
 import sqlite3
 
 browse_bp = Blueprint('browse_bp', __name__, template_folder='templates/browse')
@@ -10,12 +10,18 @@ def get_db():
         db = g._database = sqlite3.connect(DATABASE)
     return db
 
-@browse_bp.route("",methods=["GET"])
+@browse_bp.route("")
 def browse():
     cur = get_db().cursor()
-    cur.execute("SELECT Num, EngName, SciName, Family FROM Birds")
+    if request.args.get("query"):
+        q = "%" + request.args.get("query") + "%"
+        cur.execute("SELECT Num, EngName, SciName, Family FROM Birds WHERE EngName LIKE ? OR SciName LIKE ? OR Family LIKE ?",(q,q,q))
+    else:
+        cur.execute("SELECT Num, EngName, SciName, Family FROM Birds")
+    
     allbirds = cur.fetchall()
     return render_template("browse_birds.html", allbirds=allbirds)
+
 
 @browse_bp.teardown_request
 def close_connection(exception):
