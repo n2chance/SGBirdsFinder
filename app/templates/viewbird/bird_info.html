@@ -42,13 +42,14 @@
             {%endif%}
 
             <h2 class="title is-4">External Links</h2>
-                <ul>
-                    {% for link in links %}
-                        <li>
-                            <a href="{{ links[link] }}">{{ link }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
+            <p>Warning: Links may not work</p>
+            <ul>
+                {% for link in links %}
+                    <li>
+                        <a href="{{ links[link] }}">{{ link }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 {% endblock %}
