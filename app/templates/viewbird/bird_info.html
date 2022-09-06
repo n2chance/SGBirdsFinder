@@ -18,27 +18,27 @@
             <p><strong>Rarity status:</strong> {{birdInfo[6]}}</p> 
             <p>
                 <strong>Local status:</strong>
-                {%for i in birdInfo[8].split("/")%}
-                    {%if i == birdInfo[8].split("/")[-1]%}
+                {%for i in birdInfo[7].split("/")%}
+                    {%if loop.last%}
                         {{localStat.get(i)}}
                     {%else%}
                         {{localStat.get(i)}}, 
                     {%endif%}
                 {%endfor%}
             </p>
-            <p><strong>Identification:</strong> {{birdInfo[9]}}</p>
-            <p><strong>Habitat:</strong> {{birdInfo[10]}}</p>
+            <p><strong>Identification:</strong> {{birdInfo[8]}}</p>
+            <p><strong>Habitat:</strong> {{birdInfo[9]}}</p>
             
-            {%if birdInfo[11]%}
-                <p><strong>Behaviour:</strong> {{birdInfo[11]}}</p>
+            {%if birdInfo[10]%}
+                <p><strong>Behaviour:</strong> {{birdInfo[10]}}</p>
             {%endif%}
 
-            {%if not birdInfo[12]%}
+            {%if not birdInfo[11]%}
                 {{pass}}
-            {%elif birdInfo[12]==birdInfo[13]%}
-                <p><strong>Size:</strong> {{birdInfo[12]}}cm</p>
+            {%elif birdInfo[11]==birdInfo[12]%}
+                <p><strong>Size:</strong> {{birdInfo[11]}}cm</p>
             {%else%}
-                <p><strong>Size:</strong> {{birdInfo[12]}} - {{birdInfo[13]}}cm</p>
+                <p><strong>Size:</strong> {{birdInfo[11]}} - {{birdInfo[12]}}cm</p>
             {%endif%}
 
             <h2 class="title is-4">External Links</h2>

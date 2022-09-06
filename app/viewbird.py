@@ -18,10 +18,10 @@ def viewbird(birdNum):
     if birdNum >= 1 and birdNum <= int(cur.fetchone()[0]):
         cur.execute("SELECT * from Birds WHERE num = ?",(birdNum,))
         birdInfo = list(cur.fetchone()[:-3])
+        if birdInfo[11] and birdInfo[11] % 1 == 0:
+            birdInfo[11] = int(birdInfo[11])
         if birdInfo[12] and birdInfo[12] % 1 == 0:
             birdInfo[12] = int(birdInfo[12])
-        if birdInfo[13] and birdInfo[13] % 1 == 0:
-            birdInfo[13] = int(birdInfo[13])
         
         engNamel = list(birdInfo[2])
         invalidChar = "\'"
