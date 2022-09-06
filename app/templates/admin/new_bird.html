@@ -31,6 +31,50 @@
                 </div>
             </div>
             <div class="field">
+                <label class="label">Rarity Status</label>
+                <div class="control">
+                    <div class="select">
+                        <select name="rarity">
+                            <option value="0">Non-rarity</option>
+                            <option value="1">Rarity</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Category</label>
+                <div class="control">
+                    <div class="control">
+                        <label class="checkbox">
+                            <input type="checkbox" name="cat1" value="A">
+                            Occurred naturally
+                        </label>
+                    </div>
+                    <div class="control">
+                        <label class="checkbox">
+                            <input type="checkbox" name="cat2" value="C">
+                            Introduction
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Local Status</label>
+                <div class="control">
+                    {% for i in localStat %}
+                        <div class="control">
+                            <label class="checkbox">
+                                <input type="checkbox" name="stat{{ loop.index }}" value="{{ i }}">
+                                {{ localStat.get(i) }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="field">
                 <label class="label">Identification</label>
                 <div class="control">
                     <textarea class="textarea" name="id" placeholder="Appearance of the bird"></textarea>
