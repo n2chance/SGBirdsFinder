@@ -14,47 +14,47 @@
             <div class="box">
                 <form action="{{ url_for('id_bp.identify_post') }}" method="post" style="margin:auto;">
                     <div class="field">
-                        <label class="label">{{qns[0].askQn}}</label>
+                        <label class="label">{{ qns[0].askQn }}</label>
                         <div class="control">
                             <div class="select">
-                                <select name="{{qns[0].name}}">
-                                    {%for option in qns[0].options%}
-                                        <option value="{{option}}">{{qns[0].options[option]}}</option>
-                                    {%endfor%}
+                                <select name="{{ qns[0].name }}">
+                                    {% for option in qns[0].options %}
+                                        <option value="{{ option }}">{{ qns[0].options[option] }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="field">
-                        <label class="label">{{qns[1].askQn}}</label> <!-- radio with pics-->
-                            {%for option in qns[1].options%}
+                        <label class="label">{{ qns[1].askQn }}</label> <!-- radio with pics-->
+                            {% for option in qns[1].options %}
                                 <div class="control">
                                     <label class="radio">
-                                        <input type="radio" name="{{qns[1].name}}" value="{{option}}">
-                                        {{qns[1].options[option]}}
+                                        <input type="radio" name="{{ qns[1].name }}" value="{{ option }}">
+                                        {{ qns[1].options[option] }}
                                     </label>
                                 </div>
-                            {%endfor%}
+                            {% endfor %}
                     </div>
                     <div class="field">
-                        <label class="label">{{qns[2].askQn}}</label> <!-- checkboxes with colours-->
-                        {%for option in qns[2].options%}
+                        <label class="label">{{ qns[2].askQn }}</label> <!-- checkboxes with colours-->
+                        {% for option in qns[2].options %}
                             <div class="control">
-                                <label class="checkbox" >
-                                    <input type="checkbox" name="{{option}}" value="{{qns[2].options[option]}}">
-                                    {{qns[2].options[option].capitalize()}}
+                                <label class="checkbox">
+                                    <input type="checkbox" name="{{ option }}" value="{{ qns[2].options[option] }}">
+                                    {{ qns[2].options[option].capitalize() }}
                                 </label>
                             </div>
-                        {%endfor%}
+                        {% endfor %}
                     </div>
                     <div class="field">
-                        <label class="label">{{qns[3].askQn}}</label> <!-- dropdown-->
+                        <label class="label">{{ qns[3].askQn }}</label> <!-- dropdown-->
                         <div class="control">
                             <div class="select">
                                 <select name="action">
-                                    {%for option in qns[3].options%}
-                                        <option value="{{option}}">{{qns[3].options[option]}}</option>
-                                    {%endfor%}
+                                    {% for option in qns[3].options %}
+                                        <option value="{{ option }}">{{ qns[3].options[option] }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -71,4 +71,4 @@
             </div>
         </div>
     </div>
-{% endblock %}
+{%  endblock  %}
