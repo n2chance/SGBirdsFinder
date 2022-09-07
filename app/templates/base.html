@@ -6,14 +6,35 @@
 			<meta name="viewport" content="width=device-width, initial-scale=1">
 			<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/styles.css') }}">
 			<script src="https://kit.fontawesome.com/2bac960090.js" crossorigin="anonymous"></script>
+			<script>
+				document.addEventListener('DOMContentLoaded', () => {
+					const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+					
+					$navbarBurgers.forEach( el => {
+						el.addEventListener('click', () => {
+
+							const target = el.dataset.target;
+							const $target = document.getElementById(target);
+
+							el.classList.toggle('is-active');
+							$target.classList.toggle('is-active');
+						});
+					});
+				});
+			</script>
 		{% endblock %}
 	</head>
 	<body>
 		<nav class="navbar is-primary" role="navigation" aria-label="main navigation" style="height: 3.5em;">
 			<div class="navbar-brand">
+				<a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false" style="margin-left: 0;">
+					<span aria-hidden="true"></span>
+					<span aria-hidden="true"></span>
+					<span aria-hidden="true"></span>
+				</a>
 				<a class="navbar-item" href="{{ url_for('general_bp.welcome') }}">Home</a>
 		    </div>
-			<div class="navbar-menu">
+			<div class="navbar-menu" id="navMenu">
 				<div class="navbar-end">
 					<a class="navbar-item" href="{{ url_for('id_bp.identify_get') }}">Identify</a>
 					<a class="navbar-item" href="{{ url_for('browse_bp.browse') }}">Browse</a>
