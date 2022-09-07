@@ -32,7 +32,6 @@ def findBird(criteria):
     
     sqlStatementP2 = sqlStatementP2[:-5]
     cur = get_db().cursor()
-    # print(SQLSTATEMENTP1+sqlStatementP2,params)
     cur.execute(SQLSTATEMENTP1+sqlStatementP2,params)
     toRet = []
     for tupNum in cur.fetchall():
@@ -45,9 +44,6 @@ class Question():
         self.askQn = askQn
         self.options = options
         self.numSelect = numSelect
-
-    def getNumOptions(self):
-        return len(self.options)
 
 q1 = Question("place", "Where did you see the bird?", 1, \
     {"resd":"Residential/Urban Area",
@@ -133,7 +129,6 @@ def possible_birds():
                 cur.execute("SELECT * FROM Birds WHERE Num=?", session["possBirds"])
                 possBirds = list(cur.fetchone())[:-5]
                 localStat = {"I":"Introduced","M":"Migrant","R":"Resident","Va":"Vagrant","Vi":"Visitor","E":"Extirpated"}
-                print(possBirds)
             else:
                 statement = "SELECT Num, EngName, Family, SciName FROM Birds WHERE "
                 params = []
@@ -142,7 +137,6 @@ def possible_birds():
                     params.append(i)
                 cur.execute(statement[:-4], params)
                 possBirds = cur.fetchall()
-                print(possBirds)
             return render_template("possible_birds.html", possBirds=possBirds, birdCount=birdCount, localStat=localStat)
     
     else:
