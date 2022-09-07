@@ -3,5 +3,152 @@
 {% block title %}Update Bird{% endblock %}
 
 {% block content %}
+    <section class="hero is-primary">
+        <div class="hero-body">
+            <p class="title">
+                Edit {{ birdInfo[2] }}
+            </p>
+        </div>
+    </section>
 
+    <div class="box">
+        <form action="{{ url_for('admin_bp.update') }}" method="post" style="margin:auto; width: 50em;">
+            <h1 class="title">General Information</h1>
+            <div class="field">
+                <label class="label">English Name</label>
+                <div class="control">
+                    <input class="input" type="text" name="EngName" value="{{ birdInfo[2] }}" placeholder="e.g Pacific Reef Heron">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Scientific Name</label>
+                <div class="control">
+                    <input class="input" type="text" name="SciName" value="{{ birdInfo[3] }}" placeholder="e.g Egretta sacra">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Family</label>
+                <div class="control">
+                    <input class="input" type="text" name="Family" value="{{ birdInfo[0] }}" placeholder="e.g Herons, Bitterns (Ardeidae)">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Malay Name (Optional)</label>
+                <div class="control">
+                    <input class="input" type="text" name="MalName" value="{{ birdInfo[4] }}" placeholder="e.g Bangau Batu Pasifik">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Chinese Name (Optional)</label>
+                <div class="control">
+                    <input class="input" type="text" name="ChiName" value="{{ birdInfo[5] }}" placeholder="e.g 岩鹭">
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Rarity Status</label>
+                <div class="control">
+                    <div class="select">
+                        <select name="RarityStatus">
+                            {% if birdInfo[6] == 'Non-rarity'%}
+                                <option value="0" selected>Non-rarity</option>
+                                <option value="1">Rarity</option>
+                            {% else %}
+                                <option value="0">Non-rarity</option>
+                                <option value="1" selected>Rarity</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Local Status</label>
+                <div class="control">
+                    {% for i in localStat %}
+                        <div class="control">
+                            <label class="checkbox">
+                                {% if i in birdInfo[7].split("/") %}
+                                    <input type="checkbox" name="status{{ loop.index }}" value="{{ i }}" checked>
+                                {% else %}
+                                    <input type="checkbox" name="status{{ loop.index }}" value="{{ i }}">
+                                {% endif %}
+                                {{ localStat.get(i) }}
+                            </label>             
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Identification</label>
+                <div class="control">
+                    <textarea class="textarea" rows="5" name="Identification" placeholder="Appearance of the bird">{{ birdInfo[8] }}</textarea>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Habitat</label>
+                <div class="control">
+                    <textarea class="textarea" rows="3" name="Habitat" placeholder="Habitats where the bird is commonly found">{{ birdInfo[9] }}</textarea>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Behaviour</label>
+                <div class="control">
+                    <textarea class="textarea" rows="3" name="Behaviour" placeholder="Special behaviours of the bird">{{ birdInfo[10] }}</textarea>
+                </div>
+            </div>
+            
+            <h1 class="title">Information to Identify Bird</h1>
+            
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label">Size Range (cm)</label>
+                </div>
+                <div class="field-body">
+                    <div class="field" style="width: 1em;">
+                        <p class="control">
+                            <input class="input" type="text" name="MinSize" value="{{ birdInfo[11] }}" placeholder="Min">
+                        </p>
+                        <p class="help">Minimum Size</p>
+                    </div>
+                    <div class="field" style="width: 1em;">
+                        <p class="control">
+                            <input class="input" type="text" name="MaxSize" value="{{ birdInfo[12] }}" placeholder="Max">
+                        </p>
+                        <p class="help">Maximum Size</p>
+                    </div>
+                </div>
+            </div>
+
+            {% for qn in qns %}
+                <div class="field">
+                    <label class="label">{{ qn.askQn }}</label>
+                    {% set outer_loop = loop %}
+                    {% set opts = [birdInfo[13].split("/"),birdInfo[14].split("/"),birdInfo[15].split("/")] %}
+                    {% for option in qn.options %}
+                        <div class="control">
+                            <label class="checkbox">
+                                {% if option.capitalize() in opts[outer_loop.index0] %}
+                                    <input type="checkbox" name="{{ qn.name }}{{ loop.index }}" value="{{ option }}" checked>
+                                {% else %}
+                                    <input type="checkbox" name="{{ qn.name }}{{ loop.index }}" value="{{ option }}">
+                                {% endif %}
+                                {{ qn.options[option].capitalize() }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            <div class="field is-grouped" style="margin-top: 2em;">
+                <div class="control">
+                    <button type="submit" class="button is-link">Update</button>
+                </div>
+                <div class="control">
+                    <button type="reset" class="button is-link is-light">Reset</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
 {% endblock %}
