@@ -42,8 +42,8 @@ class Question():
     def __init__(self, name, askQn, numSelect, options):
         self.name = name
         self.askQn = askQn
-        self.options = options
         self.numSelect = numSelect
+        self.options = options
 
 q1 = Question("place", "Where did you see the bird?", 1, \
     {"resd":"Residential/Urban Area",
@@ -62,15 +62,16 @@ q2 = Question("size", "How large is the bird? (length)", 1, \
     "m45":"Larger than crow (more than 45cm)"
     })
 q3 = Question("colour", "What were the main colours of the bird?", 3, \
-    {"colour1":"Black",
-    "colour2":"Grey",
-    "colour3":"Brown",
-    "colour4":"White",
-    "colour5":"Red",
-    "colour6":"Orange",
-    "colour7":"Yellow",
-    "colour8":"Green",
-    "colour9":"Blue"})
+    {"Black":"Black",
+    "Grey":"Grey",
+    "Brown":"Brown",
+    "White":"White",
+    "Red":"Red",
+    "Orange":"Orange",
+    "Yellow":"Yellow",
+    "Green":"Green",
+    "Blue":"Blue"})
+
 q4 = Question("action", "What was the bird doing when you found it?", 1, \
     {"feed":"Feeding on the ground", 
     "swim":"Swimming or wading",
@@ -91,7 +92,8 @@ def identify_post():
     place = [1,request.form.get("place")]
     size = [2,request.form.get("size")]
     colours = [3,[]]
-    for colCount in range(1,10):
+
+    for colCount in range(1,len(q3.options)+1):
         currColour = request.form.get(f"colour{colCount}")
         if currColour:
             colours[1].append(currColour)
@@ -109,7 +111,6 @@ def identify_post():
             possBirdsNew = findBird(criteriaNew)
             if possBirdsNew:
                 possBirds += possBirdsNew
-        print(possBirds)
 
     session["possBirds"] = possBirds
     return redirect(url_for("id_bp.possible_birds"))

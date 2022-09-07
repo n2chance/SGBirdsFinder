@@ -41,7 +41,7 @@
                         {% for option in qns[2].options %}
                             <div class="control">
                                 <label class="checkbox">
-                                    <input type="checkbox" name="{{ option }}" value="{{ qns[2].options[option] }}">
+                                    <input type="checkbox" name="{{ qns[2].name }}{{ loop.index }}" value="{{ qns[2].options[option] }}">
                                     {{ qns[2].options[option].capitalize() }}
                                 </label>
                             </div>
