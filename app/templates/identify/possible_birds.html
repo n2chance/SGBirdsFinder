@@ -7,9 +7,10 @@
         {%if birdCount == 1%}
             <section class="hero is-primary">
                 <div class="hero-body">
-                <p class="title">
-                    Your bird has been found!
-                </p>
+                <p class="title">Your bird has been found!</p>
+                {% if session.get("notExact") %}
+                    <p class="subtitle">Bird does not match your exact criteria</p>
+                {% endif %}
                 </div>
             </section>
             <div class="box">
@@ -51,13 +52,13 @@
         {%elif birdCount > 1%}
             <section class="hero is-primary">
                 <div class="hero-body">
-                <p class="title">
-                    There are {{birdCount}} possible birds matching your criteria
-                </p>
+                <p class="title">There are {{birdCount}} possible birds</p>
+                {% if session.get("notExact") %}
+                    <p class="subtitle">Birds do not match your exact criteria</p>
+                {% endif %}
                 </div>
             </section>
-            <div class="box" style="margin: 3em auto; width:70%
-            ">
+            <div class="box" style="margin: 3em auto; width:70%">
                 <table class="table is-striped" style="margin: auto;">
                     <thead>
                         <th>No.</th>

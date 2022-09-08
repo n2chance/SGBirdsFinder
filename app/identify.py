@@ -127,10 +127,11 @@ def identify_post():
     # Find bird, then find with 1 less criteria if no birds are found
     possBirds = findBird(criteria,get_db())
     if len(possBirds) == 0:
+        session["notExact"] = 1
         for toPop in range(0,len(criteria)):
             criteriaNew = criteria[:]
             criteriaNew.pop(toPop)
-            possBirdsNew = findBird(criteriaNew)
+            possBirdsNew = findBird(criteriaNew,get_db())
             if possBirdsNew:
                 possBirds += possBirdsNew
 
