@@ -14,8 +14,8 @@
         </div>
     </section>
     
-    <div class="box" style="margin:3em 6em;">
-        <form action="{{ url_for('admin_bp.new') }}" method="post" style="margin:auto; width: 50em;">
+    <div class="box" style="width: 70%; margin: 1.5em auto;">
+        <form action="{{ url_for('admin_bp.new') }}" method="post" style="margin:auto 1em;">
             <h1 class="title">General Information</h1>
             <div class="field">
                 <label class="label">English Name (*)</label>
@@ -99,13 +99,13 @@
                     <label class="label">Size Range (cm)</label>
                 </div>
                 <div class="field-body">
-                    <div class="field" style="width: 1em;">
+                    <div class="field">
                         <p class="control">
                             <input class="input" type="text" name="MinSize" placeholder="Min">
                         </p>
                         <p class="help">Minimum Size</p>
                     </div>
-                    <div class="field" style="width: 1em;">
+                    <div class="field">
                         <p class="control">
                             <input class="input" type="text" name="MaxSize" placeholder="Max">
                         </p>

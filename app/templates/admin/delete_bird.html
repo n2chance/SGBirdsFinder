@@ -10,7 +10,7 @@
             </p>
         </div>
     </section>
-    <div class="box">
+    <div class="box" style="width: 70%; margin: 1.5em auto;">
         <p class="title">{{ birdInfo['EngName'] }}</p>
         <p class="subtitle">{{ birdInfo['SciName'] }}</p>
         <p>Family: {{ birdInfo['Family'] }}</p>
@@ -18,10 +18,10 @@
         <form action="{{ url_for('admin_bp.delete') }}" method="post">
             <div class="field is-grouped" style="margin-top: 2em;">
                 <div class="control">
-                    <button type="submit" name="birdNum" value="{{ birdInfo['Num'] }}"  class="button is-link">Delete</button>
+                    <button type="submit" name="birdNum" value="{{ birdInfo['Num'] }}"  class="button is-danger">Delete</button>
                 </div>
                 <div class="control">
-                    <a href="{{ url_for('browse_bp.browse') }}"><button type="button" class="button is-link is-light">Back</button></a>
+                    <a href="{{ url_for('browse_bp.browse') }}"><button type="button" class="button is-link">Back</button></a>
                 </div>
             </div>
         </form>
