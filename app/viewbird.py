@@ -14,10 +14,10 @@ def get_db():
 @viewbird_bp.route("/<int:birdNum>",methods=["GET"])
 def viewbird(birdNum):
     cur = get_db().cursor()
-    cur.execute("SELECT count(num) from Birds")
-    if birdNum >= 1 and birdNum <= int(cur.fetchone()[0]):
-        cur.execute("SELECT * from Birds WHERE num = ?",(birdNum,))
-        birdInfo = list(cur.fetchone()[:-3])
+    cur.execute("SELECT * FROM Birds WHERE Num = ?",(birdNum,))
+    birdInfo = cur.fetchone()
+    if birdInfo:
+        birdInfo = list(birdInfo[:-3])
         if birdInfo[11] and birdInfo[11] % 1 == 0:
             birdInfo[11] = int(birdInfo[11])
         if birdInfo[12] and birdInfo[12] % 1 == 0:
