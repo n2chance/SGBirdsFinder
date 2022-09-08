@@ -4,49 +4,53 @@
 {% block title %}Birds found{% endblock %}
 
 {% block content %}
-    <div>
-        {%if birdCount == 1%}
-            <section class="hero is-primary">
-                <div class="hero-body">
-                <p class="title">Your bird has been found!</p>
-                {% if session.get("notExact") %}
-                    <p class="subtitle">Bird does not match your exact criteria</p>
-                {% endif %}
-                </div>
-            </section>
-            <div class="box">
-                {{ viewabird(birdInfo,links) }}
+    {% if birdCount == 1 %}
+        <section class="hero is-primary">
+            <div class="hero-body">
+            <p class="title">Your bird has been found!</p>
+            {% if session.get("notExact") %}
+                <p class="subtitle">Bird does not match your exact criteria</p>
+            {% endif %}
             </div>
-        {%elif birdCount > 1%}
-            <section class="hero is-primary">
-                <div class="hero-body">
-                <p class="title">There are {{birdCount}} possible birds</p>
-                {% if session.get("notExact") %}
-                    <p class="subtitle">Birds do not match your exact criteria</p>
-                {% endif %}
-                </div>
-            </section>
-            <div class="box" style="margin: 3em auto; width:70%">
-                <table class="table is-striped" style="margin: auto;">
-                    <thead>
-                        <th>No.</th>
-                        <th>Common Name</th>
-                        <th>Family</th>
-                        <th>Scientific Name</th>
-                    </thead>
-                    <tbody>
-                        {%for bird in possBirds%}
-                            <tr>
-                                <td>{{ bird["Num"] }}</td>
-                                <td><a href="{{ url_for('viewbird_bp.viewbird',birdNum=bird['Num']) }}">{{ bird["EngName"] }}</a></td>
-                                <td>{{ bird["SciName"] }}</td>
-                                <td>{{ bird["Family"] }}</td>
-                            </tr>
-                        {%endfor%}
-                    </tbody>
-                </table>
-                <a style="margin: auto" class="button is-link" href="{{url_for('id_bp.identify_get')}}">Identify another bird</a>
+        </section>
+        <div class="box" style="margin: 3em auto; width:70%">
+            {{ viewabird(possBirds) }}
+            <div style="display: flex; justify-content:center; margin-top: 1em;">
+                <a class="button is-primary" href="{{ url_for('viewbird_bp.viewbird', birdNum=possBirds['Num']) }}" style="margin-right: 1em;">More info</a>
+                <a class="button is-primary is-light" href="{{url_for('id_bp.identify_get')}}">Identify another bird</a>
             </div>
-        {%endif%}
-    </div>
+        </div>
+    {% elif birdCount > 1 %}
+        <section class="hero is-primary">
+            <div class="hero-body">
+            <p class="title">There are {{ birdCount }} possible birds</p>
+            {% if session.get("notExact") %}
+                <p class="subtitle">Birds do not match your exact criteria</p>
+            {% endif %}
+            </div>
+        </section>
+        <div class="box" style="margin: 3em auto; width:70%">
+            <table class="table is-striped" style="margin: auto;">
+                <thead>
+                    <th>No.</th>
+                    <th>Common Name</th>
+                    <th>Family</th>
+                    <th>Scientific Name</th>
+                </thead>
+                <tbody>
+                    {% for bird in possBirds %}
+                        <tr>
+                            <td>{{ bird["Num"] }}</td>
+                            <td><a href="{{ url_for('viewbird_bp.viewbird',birdNum=bird['Num']) }}">{{ bird["EngName"] }}</a></td>
+                            <td>{{ bird["SciName"] }}</td>
+                            <td>{{ bird["Family"] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div style="display: flex; justify-content:center; margin-top: 1em;">
+                <a class="button is-link" href="{{url_for('id_bp.identify_get')}}">Identify another bird</a>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}

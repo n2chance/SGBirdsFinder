@@ -1,4 +1,4 @@
-{% macro viewabird(birdInfo,links) %}
+{% macro viewabird(birdInfo) %}
 	<p class="title">{{ birdInfo["EngName"] }}</p>
 	<p class="subtitle">{{ birdInfo["SciName"] }}</p></p>
 	<div class="content">
@@ -39,16 +39,6 @@
 		{% else %}
 			<p><strong>Size:</strong> {{ birdInfo["MinSize"]}} - {{birdInfo["MaxSize"] }}cm</p>
 		{% endif %}
-
-		<h2 class="title is-4">External Links</h2>
-		<p>Warning: Links may not work</p>
-		<ul>
-			{% for link in links %}
-				<li>
-					<a href="{{ links[link] }}">{{ link }}</a>
-				</li>
-			{% endfor %}
-		</ul>
 	</div>
 {% endmacro %}
 
