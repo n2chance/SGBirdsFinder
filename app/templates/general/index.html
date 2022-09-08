@@ -14,23 +14,26 @@
         </div>
         <div class="block" style="margin-left: 4.5rem; margin-bottom: 3em;">
             <div class="buttons are-medium">
-                <a class="button is-link" href="/identify">
+                <a class="button is-link" href="{{ url_for('id_bp.identify_get') }}">
                     Identify a bird
                 </a>
-                <a class="button is-link is-light" href="/browse">
+                <a class="button is-link is-light" href="{{ url_for('browse_bp.browse') }}">
                     Look through database
                 </a>
             </div>
         </div>
     </section>
-    <div class="columns" style="margin: 1em 1em;">
+    <div class="columns" style="margin: 2.5em;">
         <div class="column">
-            (img)
+            <div class="box" style="margin:0 3em;">
+                <p class="title">Admin?</p>
+                <p class="subtitle"><a href="{{ url_for('auth_bp.login') }}">Login page</a></p>
+            </div>
         </div>
         <div class="column">
-            <div class="content">
-                <h1>Find the name of a bird</h1>
-                <p>Identify your bird just by answering 5 simple questions</p>
+            <div class="box" style="margin:0 3em;">
+                <p class="title">Need help?</p>
+                <p class="subtitle">Go to the <a href="{{ url_for('general_bp.about') }}">about page</a> for usage instructions</p>
             </div>
         </div>
     </div>
