@@ -1,10 +1,16 @@
 {% macro viewabird(birdInfo,links) %}
+	<p class="title">{{ birdInfo["EngName"] }}</p>
+	<p class="subtitle">{{ birdInfo["SciName"] }}</p></p>
 	<div class="content">
 		<h2 class="title is-4">Names</h2>
 		<p><strong>English name:</strong> {{ birdInfo["EngName"] }}</p>
 		<p><strong>Scientific name:</strong> {{ birdInfo["SciName"] }}</p>
-		<p><strong>Malay name:</strong> {{ birdInfo["MalName"] }}</p>
-		<p><strong>Chinese name:</strong> {{ birdInfo["ChName"] }}</p>
+		{% if birdInfo["MalName"] %}
+			<p><strong>Malay name:</strong> {{ birdInfo["MalName"] }}</p>
+		{% endif %}
+		{% if birdInfo["ChName"] %}
+			<p><strong>Chinese name:</strong> {{ birdInfo["ChName"] }}</p>
+		{% endif %}
 
 		<h2 class="title is-4">Description</h2>
 		<p><strong>Rarity status:</strong> {{ birdInfo["RarityStatus"] }}</p> 
@@ -18,9 +24,10 @@
 				{% endif %}
 			{% endfor %}
 		</p>
-		<p><strong>Identification:</strong> {{ birdInfo["Identification"] }}</p>
-		<p><strong>Behaviour:</strong> {{ birdInfo["Behaviour"] }}</p>
-		
+		{% if birdInfo["Identification"] %}
+			<p><strong>Identification:</strong> {{ birdInfo["Identification"] }}</p>
+		{% endif %}
+
 		{% if birdInfo["Behaviour"] %}
 			<p><strong>Behaviour:</strong> {{ birdInfo["Behaviour"] }}</p>
 		{% endif %}
