@@ -9,49 +9,49 @@
                 Create a new bird
             </p>
             <p class="subtitle">
-                Fill in as much information as possible
+                Fill in as much information as possible<br>(*) - required fields
             </p>
         </div>
     </section>
-
+    
     <div class="box" style="margin:3em 6em;">
         <form action="{{ url_for('admin_bp.new') }}" method="post" style="margin:auto; width: 50em;">
             <h1 class="title">General Information</h1>
             <div class="field">
-                <label class="label">English Name</label>
+                <label class="label">English Name (*)</label>
                 <div class="control">
-                    <input class="input" type="text" name="EngName" placeholder="e.g Pacific Reef Heron">
+                    <input class="input" type="text" name="EngName" placeholder="e.g Pacific Reef Heron" required>
                 </div>
             </div>
             <div class="field">
-                <label class="label">Scientific Name</label>
+                <label class="label">Scientific Name (*)</label>
                 <div class="control">
-                    <input class="input" type="text" name="SciName" placeholder="e.g Egretta sacra">
+                    <input class="input" type="text" name="SciName" placeholder="e.g Egretta sacra" required>
                 </div>
             </div>
             <div class="field">
-                <label class="label">Family</label>
+                <label class="label">Family (*)</label>
                 <div class="control">
-                    <input class="input" type="text" name="Family" value="{{ birdInfo[0] }}" placeholder="e.g Herons, Bitterns (Ardeidae)">
+                    <input class="input" type="text" name="Family" placeholder="e.g Herons, Bitterns (Ardeidae)" required>
                 </div>
             </div>
             <div class="field">
-                <label class="label">Malay Name (Optional)</label>
+                <label class="label">Malay Name</label>
                 <div class="control">
                     <input class="input" type="text" name="MalName" placeholder="e.g Bangau Batu Pasifik">
                 </div>
             </div>
             <div class="field">
-                <label class="label">Chinese Name (Optional)</label>
+                <label class="label">Chinese Name</label>
                 <div class="control">
-                    <input class="input" type="text" name="ChiName" placeholder="e.g 岩鹭">
+                    <input class="input" type="text" name="ChName" placeholder="e.g 岩鹭">
                 </div>
             </div>
             <div class="field">
-                <label class="label">Rarity Status</label>
+                <label class="label">Rarity Status (*)</label>
                 <div class="control">
                     <div class="select">
-                        <select name="RarityStatus">
+                        <select name="RarityStatus" required>
                             <option value="0">Non-rarity</option>
                             <option value="1">Rarity</option>
                         </select>
@@ -60,7 +60,7 @@
             </div>
 
             <div class="field">
-                <label class="label">Local Status</label>
+                <label class="label">Local Status (*)</label>
                 <div class="control">
                     {% for i in localStat %}
                         <div class="control">
