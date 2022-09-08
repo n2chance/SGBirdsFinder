@@ -1,54 +1,10 @@
 {% extends 'base.html' %}
+{% from 'base.html' import viewabird %}
 
 {% block title %}{{ birdInfo["EngName"] }}{% endblock %}
 
 {% block content %}
     <div class="box" style="margin: auto 5em">
-        <h1 class="title">{{ birdInfo["EngName"] }}</h1>
-        <h1 class="subtitle">{{ birdInfo["SciName"] }}</h1>
-        <div class="content">
-            <h2 class="title is-4">Names</h2>
-            <p><strong>English name:</strong> {{ birdInfo["EngName"] }}</p>
-            <p><strong>Scientific name:</strong> {{ birdInfo["SciName"] }}</p>
-            <p><strong>Malay name:</strong> {{ birdInfo["MalName"] }}</p>
-            <p><strong>Chinese name:</strong> {{ birdInfo["ChName"] }}</p>
-
-            <h2 class="title is-4">Description</h2>
-            <p><strong>Rarity status:</strong> {{ birdInfo["RarityStatus"] }}</p> 
-            <p>
-                <strong>Local status:</strong>
-                {% for i in birdInfo["LocalStatus"].split("/") %}
-                    {% if loop.last %}
-                        {{ localStat.get(i) }}
-                    {% else %}
-                        {{ localStat.get(i) }}, 
-                    {% endif %}
-                {% endfor %}
-            </p>
-            <p><strong>Identification:</strong> {{ birdInfo["Identification"] }}</p>
-            <p><strong>Behaviour:</strong> {{ birdInfo["Behaviour"] }}</p>
-            
-            {% if birdInfo["Behaviour"] %}
-                <p><strong>Behaviour:</strong> {{ birdInfo["Behaviour"] }}</p>
-            {% endif %}
-
-            {% if not birdInfo["MinSize"] %}
-                {{ pass }}
-            {% elif birdInfo["MinSize"] == birdInfo["MaxSize"] %}
-                <p><strong>Size:</strong> {{ birdInfo["MinSize"] }}cm</p>
-            {% else %}
-                <p><strong>Size:</strong> {{ birdInfo["MinSize"]}} - {{birdInfo["MaxSize"] }}cm</p>
-            {% endif %}
-
-            <h2 class="title is-4">External Links</h2>
-            <p>Warning: Links may not work</p>
-            <ul>
-                {% for link in links %}
-                    <li>
-                        <a href="{{ links[link] }}">{{ link }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
+        {{viewabird(birdInfo,links)}}
     </div>
 {% endblock %}
