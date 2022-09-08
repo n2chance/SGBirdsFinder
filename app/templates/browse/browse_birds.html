@@ -3,14 +3,14 @@
 {% block title %}Browse Birds{% endblock %}
 
 {% block content %}
-    <div class="columns" style="margin: 2em;">
+    <div class="columns" style="margin: 1.5em 2em;">
         <div class="column is-one-third">
             <div class="box">
                 <p class="title">Search the database of 400+ birds</p>
                 <p class="subtitle">Enter a name, scientific name, or family</p>
 
                 <form action="{{ url_for('browse_bp.browse') }}">
-                    <div class="field has-addons">
+                    <div class="field has-addons" style="width: 100%;">
                         <div class="control">
                             <input class="input" type="text" name="query" placeholder="Find a bird">
                         </div>
@@ -27,6 +27,7 @@
         <div class="column">
             <div class="box"> 
                 {% if allbirds %}
+                <div class="table-container">
                     <table class="table is-striped" style="margin: auto;">
                         <thead>
                             <th>No.</th>
@@ -40,10 +41,10 @@
                         <tbody>
                             {% for bird in allbirds %}
                             <tr>
-                                <td>{{ bird[0] }}</td>
-                                <td><a href="/bird/{{bird[0]}}">{{ bird[1] }}</a></td>
-                                <td>{{ bird[2] }}</td>
-                                <td>{{ bird[3] }}</td>
+                                <td>{{ bird["Num"] }}</td>
+                                <td><a href="{{ url_for('viewbird_bp.viewbird', birdNum=bird['Num']) }}">{{ bird["EngName"] }}</a></td>
+                                <td>{{ bird["SciName"] }}</td>
+                                <td>{{ bird["Family"] }}</td>
                                 {% if session.get("isAdmin") %}
                                     <td>
                                         <a href="{{ url_for('admin_bp.update') }}?num={{ bird[0] }}" style="margin-right: 0.8em;">
@@ -63,6 +64,7 @@
                             
                         </tbody>
                     </table>
+                </div>
                 {% else %}
                     <p class="title">No birds found</p>
                 {% endif %}
