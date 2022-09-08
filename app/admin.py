@@ -161,8 +161,8 @@ def update():
         if request.method == "GET":
             birdNum = request.args.get("num")
             cur.execute("SELECT * FROM Birds WHERE Num = ?",(birdNum,))
-            if cur.fetchone():
-                birdInfo = cur.fetchone()
+            birdInfo = cur.fetchone()
+            if birdInfo:
                 qns = [q1,q3,q4]
                 localStat = {"I":"Introduced","M":"Migrant","R":"Resident","Va":"Vagrant","Vi":"Visitor","E":"Extirpated"}
                 return render_template("update_bird.html",birdInfo=birdInfo,qns=qns,localStat=localStat)
@@ -211,8 +211,8 @@ def delete():
         if request.method == "GET":
             birdNum = request.args.get("num")
             cur.execute("SELECT Num, EngName, SciName, Family FROM Birds WHERE Num = ?",(birdNum,))
-            if cur.fetchone():
-                birdInfo = cur.fetchone()
+            birdInfo = cur.fetchone()
+            if birdInfo:
                 return render_template("delete_bird.html",birdInfo=birdInfo)
             else:
                 flash("Invalid/missing bird number")
