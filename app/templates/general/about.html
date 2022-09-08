@@ -3,14 +3,38 @@
 {% block title %}About{% endblock %}
 
 {% block content %}
-    <div class="content" style="width: 50%; margin: 3em auto;">
-        <h1>About SGBirdsFinder</h1>
-        <p>This website can to identify birds in Singapore based on their features.</p>
-        <h1>How to use</h1>
-        <p></p>
-        <h1>Credits</h1>
-        <ul>
-            <li><a href="https://singaporebirds.com/">The Singapore Birds Project</a></li>
-        </ul>
+    <div class="box" style="width: 50%; margin: 1em auto;">
+        <div class="content">
+            <h1>About SGBirdsFinder</h1>
+            <p>This website can identify birds in Singapore based on their features.</p>
+
+            <h1>How to Use</h1>
+            <h2>Identifying a Bird</h2>
+            <ol>
+                <li>Head to the "Identify" page</li>
+                <li>Enter at least 2 characteristics of the bird you would to identify</li>
+                <li>Click "Submit"</li>
+                <li>A bird or list of birds matching your characteristics will be shown</li>
+                <li>You may want to edit your criteria if your bird is not found</li>
+            </ol>
+            <h2>Browsing the List of Birds</h2>
+            <ol>
+                <li>Head to the "Browse" page</li>
+                <li>You may search for a bird or scroll through the table of birds</li>
+            </ol>
+            {% if session.get("isAdmin")%}
+                <h2>Admin Functions</h2>
+                <ul>
+                    <li>Add new birds under "Admin">"New Bird"</li>
+                    <li>Edit/delete existing birds in "Browse"</li>
+                    <li>Log out with "Admin">"Logout"</li>
+                    <li>An overview of all these functions is shown in the dashboard ("Admin">"Dashboard")</li>
+                </ul>
+            {% endif %}
+            <h1>Credits</h1>
+            <ul>
+                <li><a href="https://singaporebirds.com/">The Singapore Birds Project</a></li>
+            </ul>
+        </div>
     </div>
 {% endblock %}
