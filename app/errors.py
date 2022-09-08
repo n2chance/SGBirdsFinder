@@ -5,3 +5,7 @@ errorhandler_bp = Blueprint('errorhandler_bp', __name__, template_folder='templa
 @errorhandler_bp.app_errorhandler(404)
 def notfound(error):
     return render_template("page_not_found.html"), 404
+
+@errorhandler_bp.app_errorhandler(500)
+def notfound(error):
+    return render_template("server_error.html"), 500
