@@ -3,11 +3,11 @@
 {% block title %}Identify a Bird{% endblock %}
 
 {% block content %}
-    <div class="columns" style="margin: 3em 2em;">
+    <div class="columns" style="margin: 1.5em 2em;">
         <div class="column is-one-third">
             <div class="box">
                 <h1 class="title">Start by answering 5 questions</h1>
-                <p>The more information given, the better the results (try to answer at least 3 questions)</p>
+                <p>The more information given, the better the results (answer at least 2 questions at minimum)</p>
             </div>
         </div>
         <div class="column">
@@ -18,6 +18,7 @@
                         <div class="control">
                             <div class="select">
                                 <select name="{{ qns[0].name }}">
+                                    <option value="">(Choose a place)</option>
                                     {% for option in qns[0].options %}
                                         <option value="{{ option }}">{{ qns[0].options[option] }}</option>
                                     {% endfor %}
@@ -26,7 +27,7 @@
                         </div>
                     </div>
                     <div class="field">
-                        <label class="label">{{ qns[1].askQn }}</label> <!-- radio with pics-->
+                        <label class="label">{{ qns[1].askQn }}</label>
                             {% for option in qns[1].options %}
                                 <div class="control">
                                     <label class="radio">
@@ -37,7 +38,7 @@
                             {% endfor %}
                     </div>
                     <div class="field">
-                        <label class="label">{{ qns[2].askQn }}</label> <!-- checkboxes with colours-->
+                        <label class="label">{{ qns[2].askQn }}</label>
                         {% for option in qns[2].options %}
                             <div class="control">
                                 <label class="checkbox">
@@ -48,10 +49,11 @@
                         {% endfor %}
                     </div>
                     <div class="field">
-                        <label class="label">{{ qns[3].askQn }}</label> <!-- dropdown-->
+                        <label class="label">{{ qns[3].askQn }}</label>
                         <div class="control">
                             <div class="select">
                                 <select name="action">
+                                    <option value="">(Choose an action)</option>
                                     {% for option in qns[3].options %}
                                         <option value="{{ option }}">{{ qns[3].options[option] }}</option>
                                     {% endfor %}
@@ -59,7 +61,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="field is-grouped">
+                    <div class="field is-grouped" style="margin-top: 2em;">
                         <div class="control">
                             <button type="submit" class="button is-link">Submit</button>
                         </div>

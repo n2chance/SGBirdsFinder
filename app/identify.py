@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, g, session
+from flask import Blueprint, render_template, request, redirect, url_for, g, session, flash
 import sqlite3
 
 id_bp = Blueprint('id_bp', __name__, template_folder='templates/identify')
@@ -10,7 +10,8 @@ def get_db():
         db = g._database = sqlite3.connect(DATABASE)
     return db
 
-def findBird(criteria):
+# Function to find bird in db
+def findBird(criteria,connection):
     SQLSTATEMENTP1 = "SELECT Num FROM Birds WHERE "
     sqlStatementP2 = ""
     params = []
@@ -31,7 +32,7 @@ def findBird(criteria):
             params.append(f"%{criterionVal}%")
     
     sqlStatementP2 = sqlStatementP2[:-5]
-    cur = get_db().cursor()
+    cur = connection.cursor()
     cur.execute(SQLSTATEMENTP1+sqlStatementP2,params)
     toRet = []
     for tupNum in cur.fetchall():
@@ -45,6 +46,7 @@ class Question():
         self.numSelect = numSelect
         self.options = options
 
+# Might move this to a json file
 q1 = Question("place", "Where did you see the bird?", 1, \
     {"resd":"Residential/Urban Area",
     "pnr":"Park/Nature Reserve",
@@ -61,8 +63,8 @@ q2 = Question("size", "How large is the bird? (length)", 1, \
     "40t45":"Crow-sized (40 - 45cm)",
     "m45":"Larger than crow (more than 45cm)"
     })
-q3 = Question("colour", "What were the main colours of the bird?", 3, \
-    {"Black":"Black",
+q3 = Question("colour", "What were the main colours of the bird? (max 3)", 3, \
+    {"black":"Black",
     "Grey":"Grey",
     "Brown":"Brown",
     "White":"White",
@@ -71,7 +73,6 @@ q3 = Question("colour", "What were the main colours of the bird?", 3, \
     "Yellow":"Yellow",
     "Green":"Green",
     "Blue":"Blue"})
-
 q4 = Question("action", "What was the bird doing when you found it?", 1, \
     {"feed":"Feeding on the ground", 
     "swim":"Swimming or wading",
@@ -89,22 +90,43 @@ def identify_get():
 
 @id_bp.post("")
 def identify_post():
+    # Get inputs from form
     place = [1,request.form.get("place")]
     size = [2,request.form.get("size")]
     colours = [3,[]]
-
     for colCount in range(1,len(q3.options)+1):
         currColour = request.form.get(f"colour{colCount}")
         if currColour:
             colours[1].append(currColour)
     action = [4,request.form.get("action")]
+    
+    # Validating inputs
+    criteria = []
+    count = 1
+    for crit in (place,size,colours,action):
+        if crit[1] is not None and len(crit[1]) >= 1:
+            qn = eval(f"q{count}")
+            if type(crit[1]) == list and len(crit[1])> qn.numSelect:
+                flash(f"Choose a maximum of {qn.numSelect} options for {qn.name}")
+                return redirect(url_for("id_bp.identify_get"))
+            elif crit[0] == 3:
+                validColours = []
+                for colour in crit[1]:
+                    if colour in q3.options:
+                        validColours.append(colour)
+                criteria.append([3,validColours])
+            else:
+                if crit[1] in qn.options:
+                    criteria.append(crit)
+        count += 1
 
-    # validate inputs here
-    # check max no. of colours is 3
-
-    criteria = [place,size,colours,action]
-    possBirds = findBird(criteria)
-    if len(possBirds) == 0 and len(criteria) >= 2:
+    if len(criteria) < 2:
+        flash("Fill in at least 2 criteria")
+        return redirect(url_for("id_bp.identify_get"))
+    
+    # Find bird, then find with 1 less criteria if no birds are found
+    possBirds = findBird(criteria,get_db())
+    if len(possBirds) == 0:
         for toPop in range(0,len(criteria)):
             criteriaNew = criteria[:]
             criteriaNew.pop(toPop)
