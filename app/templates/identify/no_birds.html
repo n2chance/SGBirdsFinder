@@ -3,7 +3,9 @@
 {% block title %}No birds found{% endblock %}
 
 {% block content %}
-    <div>
-        <p>No birds :(</p>
+    <div class="box">
+        <p class="title">No birds have been found</p>
+        <p class="subtitle">Try a more general criteria</p>
+        <a style="margin: auto" class="button is-link" href="{{url_for('id_bp.identify_get')}}">Identify another bird</a>
     </div>
 {% endblock %}
