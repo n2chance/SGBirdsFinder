@@ -3,10 +3,27 @@
 {% block title %}Delete Bird{% endblock %}
 
 {% block content %}
+    <section class="hero is-primary">
+        <div class="hero-body">
+            <p class="title">
+                Delete bird '{{ birdInfo['EngName']}}'?
+            </p>
+        </div>
+    </section>
     <div class="box">
-        <p class="title">Delete bird?</p>
-        <form>
-            
+        <p class="title">{{ birdInfo['EngName'] }}</p>
+        <p class="subtitle">{{ birdInfo['SciName'] }}</p>
+        <p>Family: {{ birdInfo['Family'] }}</p>
+        <p>Link: <a href="{{ url_for('viewbird_bp.viewbird',birdNum=birdInfo['Num']) }}">{{ birdInfo['EngName'] }}</a></p>
+        <form action="{{ url_for('admin_bp.delete') }}" method="post">
+            <div class="field is-grouped" style="margin-top: 2em;">
+                <div class="control">
+                    <button type="submit" name="birdNum" value="{{ birdInfo['Num'] }}"  class="button is-link">Delete</button>
+                </div>
+                <div class="control">
+                    <a href="{{ url_for('browse_bp.browse') }}"><button class="button is-link is-light">Cancel</button></a>
+                </div>
+            </div>
         </form>
     </div>
 {% endblock %}
