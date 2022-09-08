@@ -8,6 +8,7 @@ def get_db():
     db = getattr(g, '_database', None)
     if db is None:
         db = g._database = sqlite3.connect(DATABASE)
+        db.row_factory = sqlite3.Row
     return db
 
 # Function to find bird in db
@@ -147,13 +148,13 @@ def possible_birds():
         elif len(session["possBirds"]) >= 1:
             birdCount = len(session["possBirds"])
             cur = get_db().cursor()
-            localStat = ""
             possBirds = []
             if birdCount == 1:
-                cur.execute("SELECT * FROM Birds WHERE Num=?", session["possBirds"])
-                possBirds = list(cur.fetchone())[:-5]
+                cur.execute("SELECT Family, Num, EngName, SciName, MalName, ChName, RarityStatus, LocalStatus, Identification, Habitat, Behaviour, MinSize, MaxSize FROM Birds WHERE Num=?", session["possBirds"])
+                possBirds = cur.fetchone()
                 localStat = {"I":"Introduced","M":"Migrant","R":"Resident","Va":"Vagrant","Vi":"Visitor","E":"Extirpated"}
             else:
+                localStat = ""
                 statement = "SELECT Num, EngName, Family, SciName FROM Birds WHERE "
                 params = []
                 for i in session["possBirds"]:
