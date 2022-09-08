@@ -14,14 +14,14 @@
         <p class="title">{{ birdInfo['EngName'] }}</p>
         <p class="subtitle">{{ birdInfo['SciName'] }}</p>
         <p>Family: {{ birdInfo['Family'] }}</p>
-        <p>Link: <a href="{{ url_for('viewbird_bp.viewbird',birdNum=birdInfo['Num']) }}">{{ birdInfo['EngName'] }}</a></p>
+        <p>Link: <a href="{{ url_for('viewbird_bp.viewbird', birdNum=birdInfo['Num']) }}">{{ birdInfo['EngName'] }}</a></p>
         <form action="{{ url_for('admin_bp.delete') }}" method="post">
             <div class="field is-grouped" style="margin-top: 2em;">
                 <div class="control">
                     <button type="submit" name="birdNum" value="{{ birdInfo['Num'] }}"  class="button is-link">Delete</button>
                 </div>
                 <div class="control">
-                    <a href="{{ url_for('browse_bp.browse') }}"><button class="button is-link is-light">Cancel</button></a>
+                    <a href="{{ url_for('browse_bp.browse') }}"><button type="button" class="button is-link is-light">Back</button></a>
                 </div>
             </div>
         </form>
