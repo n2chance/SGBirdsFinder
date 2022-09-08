@@ -8,6 +8,7 @@ def get_db():
     db = getattr(g, '_database', None)
     if db is None:
         db = g._database = sqlite3.connect(DATABASE)
+        db.row_factory = sqlite3.Row
     return db
 
 class Question():
@@ -26,15 +27,15 @@ q1 = Question("place", "Where did you see the bird?", 1, \
     "sea":"Sea Coast",
     "open":"Clearing/Grassland"})
 q3 = Question("colour", "What were the main colours of the bird?", 3, \
-    {"Black":"Black",
-    "Grey":"Grey",
-    "Brown":"Brown",
-    "White":"White",
-    "Red":"Red",
-    "Orange":"Orange",
-    "Yellow":"Yellow",
-    "Green":"Green",
-    "Blue":"Blue"})
+    {"black":"Black",
+    "grey":"Grey",
+    "brown":"Brown",
+    "white":"White",
+    "red":"Red",
+    "orange":"Orange",
+    "yellow":"Yellow",
+    "green":"Green",
+    "blue":"Blue"})
 q4 = Question("action", "What was the bird doing when you found it?", 1, \
     {"feed":"Feeding on the ground", 
     "swim":"Swimming or wading",
@@ -44,6 +45,65 @@ q4 = Question("action", "What was the bird doing when you found it?", 1, \
     "fly":"Soaring or flying",
     "fish":"Fishing"
     })
+
+def checkAndParse(responses, columns, tableInfo):
+    colInfoDict = {}
+    for i in tableInfo:
+        colInfoDict[i["name"]] = i["notnull"]
+    localStat = {"I":"Introduced","M":"Migrant","R":"Resident","Va":"Vagrant","Vi":"Visitor","E":"Extirpated"}
+    params = []
+    for col in columns:
+        val = responses.get(col) 
+
+        if col == "LocalStatus":
+            stats = ""
+            for i in range(1,len(localStat)+1):
+                stat = responses.get(f"status{i}")
+                if stat in localStat:
+                    stats += stat + "/"
+                elif stat is not None:
+                    return False, "Invalid local status"
+            params.append(stats[:-1])
+        
+        # check if field has NOT NULL constraint in db and response is empty
+        elif (val is None or val == "") and colInfoDict[col] == 1:
+            return False, "Please enter compulsory fields"
+        
+        elif col == "RarityStatus":
+            if val in ["0","1"]:
+                if val == 0:
+                    params.append("Non-rarity")
+                else:
+                    params.append("Rarity")
+            else:
+                return False, "Invalid rarity status"
+        
+        elif col == "MinSize":
+            if val == "":
+                params.append(None)
+            else:
+                try:
+                    assert float(val) and float(val) > 0 and float(val) >= float(responses.get("MinSize"))
+                    params.append(float(val))
+                except:
+                    return False, "Invalid minimum size"
+        
+        elif col == "MaxSize":
+            if val == "":
+                params.append(None)
+            else:
+                try:
+                    assert float(val) and float(val) > 0 and float(val) >= float(responses.get("MinSize"))
+                    params.append(float(val))
+                except:
+                    return False,"Invalid minimum size"
+        
+        else:
+            if val == "" or val == None:
+                params.append(None)
+            else:
+                params.append(val)
+    return True, params
 
 @admin_bp.route("")
 def dash():
@@ -63,8 +123,32 @@ def new():
             return render_template("new_bird.html",qns=qns,localStat=localStat)
         
         elif request.method == "POST":
-            pass
-    
+            con = get_db()
+            cur = con.cursor()
+            cur.execute("SELECT * FROM Birds")
+            cols = cur.fetchone().keys()
+            cols.remove("Num")
+            cols = tuple(cols)
+            cur.execute("PRAGMA table_info(Birds)")
+            tableInfo = cur.fetchall()
+
+            check = checkAndParse(request.form, cols, tableInfo)
+            if check[0]:
+                params = tuple(check[1])
+                sqlStatement = f"INSERT INTO Birds {cols} VALUES (" + "?, "*len(params)
+                sqlStatement = sqlStatement[:-2] + ")"
+                try:
+                    cur.execute(sqlStatement,params)
+                    con.commit()
+                    flash(f"Bird \'{request.form.get('EngName')}\' added successfully!")
+                    
+                except:
+                    flash("Error adding bird to database")
+                return redirect(url_for("admin_bp.new"))
+            else:
+                flash(check[1])
+                return redirect(url_for("admin_bp.new"))
+
     else:
         flash("Login required")
         return redirect(url_for("auth_bp.login"))
@@ -72,23 +156,48 @@ def new():
 @admin_bp.route("/update",methods=["GET","POST"])
 def update():
     if session.get("isAdmin"):
-        cur = get_db().cursor()
+        con = get_db()
+        cur = con.cursor()
         if request.method == "GET":
             birdNum = request.args.get("num")
-            cur.execute("SELECT count(num) from Birds")
-            if not birdNum or (not birdNum.isnumeric() or int(birdNum) < 1 or int(birdNum) > int(cur.fetchone()[0])):
-                flash("Invalid/missing bird number")
-                return redirect(url_for("browse_bp.browse"))
-            else:
-                cur.execute("SELECT * FROM Birds WHERE Num=?",birdNum)
+            cur.execute("SELECT * FROM Birds WHERE Num = ?",(birdNum,))
+            if cur.fetchone():
                 birdInfo = cur.fetchone()
                 qns = [q1,q3,q4]
                 localStat = {"I":"Introduced","M":"Migrant","R":"Resident","Va":"Vagrant","Vi":"Visitor","E":"Extirpated"}
                 return render_template("update_bird.html",birdInfo=birdInfo,qns=qns,localStat=localStat)
+            else:
+                flash("Invalid/missing bird number")
+                return redirect(url_for("browse_bp.browse"))
         
         elif request.method == "POST":
-            birdNum = request.form.get("birdNum")
-            return birdNum
+            cur.execute("SELECT * FROM Birds")
+            cols = cur.fetchone().keys()
+            cols.remove("Num")
+            cols = tuple(cols)
+            cur.execute("PRAGMA table_info(Birds)")
+            tableInfo = cur.fetchall()
+            
+            check = checkAndParse(request.form, cols, tableInfo)
+            if check[0]:
+                params = check[1]
+                sqlStatement = "UPDATE Birds SET "
+                for col in cols:
+                    sqlStatement += f"{col} = ?, "
+                sqlStatement = sqlStatement[:-2] + " WHERE Num = ?"
+                params.append(request.form.get("birdNum"))
+                print(sqlStatement,params)
+                try:
+                    cur.execute(sqlStatement,tuple(params))
+                    con.commit()
+                    flash(f"Bird \'{request.form.get('EngName')}\' updated successfully!")
+                except:
+                    flash("Error adding bird to database")
+                finally:
+                    return redirect(url_for("browse_bp.browse"))
+            else:
+                flash(check[1])
+                return redirect(url_for("browse_bp.browse"))
     
     else:
         flash("Login required")
@@ -97,21 +206,31 @@ def update():
 @admin_bp.route("/delete",methods=["GET","POST"])
 def delete():
     if session.get("isAdmin"):
-        cur = get_db().cursor()
+        con = get_db()
+        cur = con.cursor()
         if request.method == "GET":
             birdNum = request.args.get("num")
-            cur.execute("SELECT count(num) from Birds")
-            if not birdNum or (not birdNum.isnumeric() or int(birdNum) < 1 or int(birdNum) > int(cur.fetchone()[0])):
-                flash("Invalid/missing bird number")
-                return redirect(url_for("browse_bp.browse"))
-            else:
-                cur.execute("SELECT Num, EngName, SciName, Family FROM Birds WHERE Num=?",birdNum)
+            cur.execute("SELECT Num, EngName, SciName, Family FROM Birds WHERE Num = ?",(birdNum,))
+            if cur.fetchone():
                 birdInfo = cur.fetchone()
                 return render_template("delete_bird.html",birdInfo=birdInfo)
+            else:
+                flash("Invalid/missing bird number")
+                return redirect(url_for("browse_bp.browse"))
         
         elif request.method == "POST":
-            flash("Bird deleted successfully")
-            return redirect(url_for())
+            birdNum = request.form.get("birdNum")
+            try:
+                cur.execute("SELECT EngName FROM Birds WHERE Num=?",(birdNum,))
+                name = cur.fetchone()['EngName']
+                cur.execute("DELETE FROM Birds WHERE Num=?",(birdNum,))
+                
+                con.commit()
+                flash(f"Bird \'{name}\' deleted successfully!")
+            except:
+                flash("Error deleting bird from database")
+            finally:
+                return redirect(url_for("browse_bp.browse"))
     
     else:
         flash("Login required")
