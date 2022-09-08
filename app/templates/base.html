@@ -1,3 +1,4 @@
+{# Macro to show info about a bird #}
 {% macro viewabird(birdInfo) %}
 	<p class="title">{{ birdInfo["EngName"] }}</p>
 	<p class="subtitle">{{ birdInfo["SciName"] }}</p></p>
@@ -42,6 +43,7 @@
 	</div>
 {% endmacro %}
 
+{# Base HTML document #}
 <!DOCTYPE html>
 <html>
 	<head>
