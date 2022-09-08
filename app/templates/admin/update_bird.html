@@ -127,7 +127,6 @@
                 <div class="field">
                     <label class="label">{{ qn.askQn }}</label>
                     {% set outer_loop = loop %}
-                    {% set opts = [birdInfo['Place'].split("/"),birdInfo['Colour'].split("/"),birdInfo['Action'].split("/")] %}
                     {% for option in qn.options %}
                         <div class="control">
                             <label class="checkbox">

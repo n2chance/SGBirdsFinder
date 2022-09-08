@@ -162,10 +162,19 @@ def update():
             birdNum = request.args.get("num")
             cur.execute("SELECT * FROM Birds WHERE Num = ?",(birdNum,))
             birdInfo = cur.fetchone()
+            print(birdInfo["Place"])
+            for i in birdInfo:
+                print(i)
             if birdInfo:
                 qns = [q1,q3,q4]
                 localStat = {"I":"Introduced","M":"Migrant","R":"Resident","Va":"Vagrant","Vi":"Visitor","E":"Extirpated"}
-                return render_template("update_bird.html",birdInfo=birdInfo,qns=qns,localStat=localStat)
+                opts = []
+                for i in (birdInfo['Place'],birdInfo['Colour'],birdInfo['Action']):
+                    if type(i) == str:
+                        opts.append(i.split("/"))
+                    else:
+                        opts.append([])
+                return render_template("update_bird.html",birdInfo=birdInfo,qns=qns,localStat=localStat,opts=opts)
             else:
                 flash("Invalid/missing bird number")
                 return redirect(url_for("browse_bp.browse"))
