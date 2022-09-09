@@ -13,7 +13,7 @@ A web app to identify birds in Singapore based on their features.
 
 ## Usage
 
-Go to https://jycx50.pythonanywhere.com. Refer to the about page for help.
+Go to the [website](https://jycx50.pythonanywhere.com). Refer to the about page for help.
 
 For admin login, the username is `a` and the password is `a`
 
@@ -74,19 +74,30 @@ The app is split into 7 main parts or features:
 
 Each main part has a corresponding Flask blueprint and folder with Jinja template(s).
 
-## Running
+## Prerequisites
 
+### Python
+
+A virtual environment is recommended to be installed.
 To run the app locally, the Python 3 must be installed, along with the following modules:
 
 - flask
 - python-dotenv
+
+To do so, run `pip install -r requirements.txt`
+
+### npm
 
 Optionally, the following npm dependencies can be installed to generate the CSS file from the sass file:
 
 - bulma
 - node-sass
 
-If the app is running for the first time, run the `setup.py` file. The script generates and prints the admin credentials and initialises the database `Birds.db` from the `Birds.sql` file. It can also be run to reset the data in the database.
+To do so, run `npm install`
+
+## Running
+
+If the app is running for the first time, run the `setup.py` script, and select "y" for both questions. The script generates and prints the admin credentials and initialises the database `Birds.db` from the `Birds.sql` file. It can also be run to reset the data in the database.
 
 Finally, run the `app.py` file to start the web app.
 
