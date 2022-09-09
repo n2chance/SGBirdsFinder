@@ -4,15 +4,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Ensure app is running from 'app' directory
-APP_FOLDER_NAME = "app"
-if os.getcwd().endswith(APP_FOLDER_NAME):
-    pass
-elif APP_FOLDER_NAME in os.listdir():
-    os.chdir(APP_FOLDER_NAME)
-else:
-    raise Exception(f"{APP_FOLDER_NAME} folder not found")
-
 from general import general_bp
 from auth import auth_bp
 from identify import id_bp
