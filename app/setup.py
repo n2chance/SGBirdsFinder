@@ -47,6 +47,11 @@ elif APP_FOLDER_NAME in os.listdir():
     os.chdir(APP_FOLDER_NAME)
 else:
     raise Exception(f"{APP_FOLDER_NAME} folder not found")
-    
-setupEnv()
-initdb("Birds.sql","Birds.db")
+
+inp = input("Generate credentials? (y/n): ")
+if inp == "y":
+    setupEnv()
+
+inp = input("Generate db? (y/n): ")
+if inp == 'y':
+    initdb("Birds.sql","Birds.db")
