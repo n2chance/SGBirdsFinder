@@ -15,7 +15,7 @@ A web app to identify birds in Singapore based on their features.
 
 Go to the [website](https://jycx50.pythonanywhere.com). Refer to the about page for help.
 
-For admin login, the username is `admin-HNI` and the password is `5660M1mkKa`
+For admin login, the username is `admin-kgi` and the password is `iFE79iUd45`
 
 ## Project Structure
 
@@ -93,7 +93,7 @@ pip install -r requirements.txt
 
 ### npm
 
-Optionally, the following npm dependencies can be installed to generate the CSS file from the sass file:
+Optionally, npm and the following npm dependencies can be installed to generate the CSS file from the sass file:
 
 - bulma
 - node-sass
@@ -102,6 +102,13 @@ To do so, run:
 
 ```bash
 npm install
+```
+
+The following npm scripts `css-build` and `start` are included to build the CSS and automatically watch for changes respectively
+
+```bash
+npm run css-build
+npm start
 ```
 
 ## Running
