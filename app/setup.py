@@ -1,9 +1,8 @@
-# Setup/reset the environment from scratch
+# Script to setup/reset the environment and files
 import os
 import secrets
 import string
 import sqlite3
-import hashlib
 
 def generateCred():
     chars = string.ascii_letters + string.digits
@@ -38,6 +37,14 @@ def initdb(sqlFileN,dbName):
     db.close()
     print("Database successfully created")
 
-os.chdir("../app")
+# Ensure script is running from 'app' directory
+APP_FOLDER_NAME = "app"
+if os.getcwd().endswith(APP_FOLDER_NAME):
+    pass
+elif APP_FOLDER_NAME in os.listdir():
+    os.chdir(APP_FOLDER_NAME)
+else:
+    raise Exception(f"{APP_FOLDER_NAME} folder not found")
+    
 setupEnv()
 initdb("Birds.sql","Birds.db")
