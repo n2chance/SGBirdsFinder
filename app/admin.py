@@ -67,7 +67,7 @@ def checkAndParse(responses, columns, tableInfo):
                     return False, "Invalid local status"
             params.append(stats[:-1])
         
-        # check if field has NOT NULL constraint in db and response is empty
+        # Check if column has NOT NULL constraint in db and the associated response is empty
         elif (val is None or val == "") and colInfoDict[col] == 1:
             return False, "Please enter compulsory fields"
         
@@ -86,9 +86,10 @@ def checkAndParse(responses, columns, tableInfo):
             else:
                 try:
                     assert float(val) and float(val) > 0 and float(val) >= float(responses.get("MinSize"))
-                    params.append(float(val))
                 except:
                     return False, "Invalid minimum size"
+                else:
+                    params.append(float(val))
         
         elif col == "MaxSize":
             if val == "":
@@ -96,10 +97,18 @@ def checkAndParse(responses, columns, tableInfo):
             else:
                 try:
                     assert float(val) and float(val) > 0 and float(val) >= float(responses.get("MinSize"))
-                    params.append(float(val))
                 except:
                     return False,"Invalid minimum size"
-        
+                else:
+                    params.append(float(val))
+        elif col in ("Place","Colour","Action"):
+            temp = []
+            lenOpts = {"Place":len(q1.options),"Colour":len(q3.options),"Action":len(q4.options)}
+            for i in range(1,lenOpts[col]+1):
+                val = responses.get(f"{col.lower()}{i}")
+                if val:
+                    temp.append(val)
+            params.append("/".join(temp))
         else:
             if val == "" or val == None:
                 params.append(None)
@@ -134,6 +143,7 @@ def new():
             cur.execute("PRAGMA table_info(Birds)")
             tableInfo = cur.fetchall()
 
+            print(request.form)
             check = checkAndParse(request.form, cols, tableInfo)
             if check[0]:
                 params = tuple(check[1])
