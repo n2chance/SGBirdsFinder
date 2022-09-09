@@ -15,7 +15,7 @@ A web app to identify birds in Singapore based on their features.
 
 Go to the [website](https://jycx50.pythonanywhere.com). Refer to the about page for help.
 
-For admin login, the username is `a` and the password is `a`
+For admin login, the username is `admin-HNI` and the password is `5660M1mkKa`
 
 ## Project Structure
 
@@ -83,6 +83,7 @@ To run the app locally, the Python 3 must be installed, along with the following
 
 - flask
 - python-dotenv
+- requests
 
 To do so, run `pip install -r requirements.txt`
 
@@ -99,7 +100,12 @@ To do so, run `npm install`
 
 If the app is running for the first time, run the `setup.py` script, and select "y" for both questions. The script generates and prints the admin credentials and initialises the database `Birds.db` from the `Birds.sql` file. It can also be run to reset the data in the database.
 
-Finally, run the `app.py` file to start the web app.
+Finally, run `app.py` to start the web app.
+
+```bash
+python3 setup.py
+python3 app/app.py
+```
 
 ## Credits
 
