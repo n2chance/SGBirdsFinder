@@ -140,7 +140,7 @@ def identify_post():
     return redirect(url_for("id_bp.possible_birds"))
 
 @id_bp.route("/possible-birds",methods=["GET"])
-def possible_birds():
+def possible_birds(): # List possible birds after identification
     if session.get("possBirds") is not None:
         if len(session["possBirds"]) == 0:
             return render_template("no_birds.html")

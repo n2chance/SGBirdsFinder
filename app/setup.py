@@ -16,6 +16,7 @@ def generateCred():
     return username, password
 
 def setupEnv():
+    # Generate .env file with secret key, username, password
     user, pw = generateCred()
     with open(".env","w") as env:
         env.write(f"APP_SECRET_KEY={secrets.token_hex()}\n")
@@ -26,6 +27,7 @@ def setupEnv():
     print(f"Password: {pw}")
 
 def initdb(sqlFileN,dbName):
+    # Initialise database
     with open(sqlFileN) as sqlFile:
         sqlScript = sqlFile.read()
     if os.access(dbName,os.F_OK):

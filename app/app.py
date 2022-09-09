@@ -24,6 +24,7 @@ from admin import admin_bp
 app = Flask(__name__)
 app.secret_key = os.getenv("APP_SECRET_KEY")
 
+# Each part of the app is a blueprint
 app.register_blueprint(general_bp)
 app.register_blueprint(admin_bp, url_prefix='/admin')
 app.register_blueprint(auth_bp, url_prefix='/auth')

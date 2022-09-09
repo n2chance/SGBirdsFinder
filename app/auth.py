@@ -5,13 +5,13 @@ from dotenv import load_dotenv
 auth_bp = Blueprint('auth_bp', __name__, template_folder='templates/auth')
 
 @auth_bp.route("/login",methods=["GET"])
-def login():
+def login(): # Login page
     if session.get("isAdmin"):
         return redirect(url_for("admin_bp.dash"))
     return render_template("login_page.html")
 
 @auth_bp.route("/verify",methods=["POST"])
-def verify():
+def verify(): # Verify if login is correct
     if session.get("isAdmin"):
         return redirect(url_for("admin_bp.dash"))
     user = request.form.get("user")

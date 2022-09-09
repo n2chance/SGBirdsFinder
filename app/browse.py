@@ -14,7 +14,7 @@ def get_db():
 @browse_bp.route("")
 def browse():
     cur = get_db().cursor()
-    if request.args.get("query"):
+    if request.args.get("query"): # If search query is given
         q = "%" + request.args.get("query") + "%"
         cur.execute("SELECT Num, EngName, SciName, Family FROM Birds WHERE EngName LIKE ? OR SciName LIKE ? OR Family LIKE ?",(q,q,q))
     else:

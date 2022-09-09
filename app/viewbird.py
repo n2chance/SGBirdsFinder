@@ -18,6 +18,7 @@ def viewbird(birdNum):
     cur.execute("SELECT Family, Num, EngName, SciName, MalName, ChName, RarityStatus, LocalStatus, Identification, Habitat, Behaviour, MinSize, MaxSize FROM Birds WHERE Num = ?",(birdNum,))
     birdInfo = cur.fetchone()
     if birdInfo:
+        # Create links for the bird        
         engNamel = list(birdInfo["EngName"])
         invalidChar = "\'"
         while invalidChar in engNamel:

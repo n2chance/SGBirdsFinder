@@ -18,6 +18,7 @@ class Question():
         self.options = options
         self.numSelect = numSelect
 
+# Might move this to a json file
 q1 = Question("place", "Where did you see the bird?", 1, \
     {"resd":"Residential/Urban Area",
     "pnr":"Park/Nature Reserve",
@@ -46,6 +47,7 @@ q4 = Question("action", "What was the bird doing when you found it?", 1, \
     "fish":"Fishing"
     })
 
+# Validate responses
 def checkAndParse(responses, columns, tableInfo):
     colInfoDict = {}
     for i in tableInfo:
@@ -162,9 +164,6 @@ def update():
             birdNum = request.args.get("num")
             cur.execute("SELECT * FROM Birds WHERE Num = ?",(birdNum,))
             birdInfo = cur.fetchone()
-            print(birdInfo["Place"])
-            for i in birdInfo:
-                print(i)
             if birdInfo:
                 qns = [q1,q3,q4]
                 localStat = {"I":"Introduced","M":"Migrant","R":"Resident","Va":"Vagrant","Vi":"Visitor","E":"Extirpated"}
@@ -195,7 +194,6 @@ def update():
                     sqlStatement += f"{col} = ?, "
                 sqlStatement = sqlStatement[:-2] + " WHERE Num = ?"
                 params.append(request.form.get("birdNum"))
-                print(sqlStatement,params)
                 try:
                     cur.execute(sqlStatement,tuple(params))
                     con.commit()

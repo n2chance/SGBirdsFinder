@@ -7,5 +7,5 @@ def notfound(error):
     return render_template("page_not_found.html"), 404
 
 @errorhandler_bp.app_errorhandler(500)
-def notfound(error):
+def servererror(error):
     return render_template("server_error.html"), 500
