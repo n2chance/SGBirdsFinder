@@ -27,7 +27,11 @@
         <div class="column">
             <div class="box" style="margin:0 3em;">
                 <p class="title">Admin?</p>
-                <p class="subtitle"><a href="{{ url_for('auth_bp.login') }}">Login page</a></p>
+                {% if session.get("isAdmin") %}
+                    <p class="subtitle"><a href="{{ url_for('admin_bp.dash') }}">Dashboard</a></p>
+                {% else %} 
+                    <p class="subtitle"><a href="{{ url_for('auth_bp.login') }}">Login page</a></p>
+                {% endif %}
             </div>
         </div>
         <div class="column">
