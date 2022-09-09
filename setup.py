@@ -39,19 +39,11 @@ def initdb(sqlFileN,dbName):
     db.close()
     print("Database successfully created")
 
-# Ensure script is running from 'app' directory
-APP_FOLDER_NAME = "app"
-if os.getcwd().endswith(APP_FOLDER_NAME):
-    pass
-elif APP_FOLDER_NAME in os.listdir():
-    os.chdir(APP_FOLDER_NAME)
-else:
-    raise Exception(f"{APP_FOLDER_NAME} folder not found")
-
 inp = input("Generate credentials? (y/n): ")
 if inp == "y":
     setupEnv()
 
+os.chdir("app")
 inp = input("Generate db? (y/n): ")
 if inp == 'y':
     initdb("Birds.sql","Birds.db")

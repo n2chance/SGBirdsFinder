@@ -3,7 +3,7 @@ import sqlite3
 
 admin_bp = Blueprint('admin_bp', __name__, template_folder='templates/admin')
 
-DATABASE = 'Birds.db'
+DATABASE = 'app/Birds.db'
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:

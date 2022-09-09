@@ -4,7 +4,7 @@ import requests
 
 viewbird_bp = Blueprint('viewbird_bp', __name__, template_folder='templates/viewbird')
 
-DATABASE = 'Birds.db'
+DATABASE = 'app/Birds.db'
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
