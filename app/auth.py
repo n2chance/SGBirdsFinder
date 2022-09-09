@@ -1,13 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, g, session
+import os
+from dotenv import load_dotenv
 
 auth_bp = Blueprint('auth_bp', __name__, template_folder='templates/auth')
-
-DATABASE = 'Birds.db'
-def get_db():
-    db = getattr(g, '_database', None)
-    if db is None:
-        db = g._database = sqlite3.connect(DATABASE)
-    return db
 
 @auth_bp.route("/login",methods=["GET"])
 def login():
@@ -21,17 +16,8 @@ def verify():
         return redirect(url_for("admin_bp.dash"))
     user = request.form.get("user")
     password = request.form.get("pwd")
-    '''
-    cur = get_db().cursor()
-    cur.execute("SELECT AdminID FROM Admin WHERE Username=? AND Password=?",(user, password))
-    adminID = cur.fetchone()
-    '''
-    if user == "aaa" and password == "bbbc":
-        adminID = True
-    else:
-        adminID = False
-        
-    if adminID:
+    load_dotenv()
+    if user == os.getenv("ADMIN_USERNAME") and password == os.getenv("ADMIN_PASSWORD"):
         session["isAdmin"] = 1
         flash("Successfully logged in!")
         return redirect(url_for("general_bp.welcome"))
@@ -45,9 +31,3 @@ def logout():
         session.pop("isAdmin")
         flash("Logged out successfully!")
     return redirect(url_for("general_bp.welcome"))
-
-@auth_bp.teardown_request
-def close_connection(exception):
-    db = getattr(g, '_database', None)
-    if db is not None:
-        db.close()
