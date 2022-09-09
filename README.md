@@ -79,7 +79,7 @@ Each main part has a corresponding Flask blueprint and folder with Jinja templat
 To run the app locally, the Python 3 must be installed, along with the following modules:
 
 - flask
-- dotenv
+- python-dotenv
 
 Optionally, the following npm dependencies can be installed to generate the CSS file from the sass file:
 
