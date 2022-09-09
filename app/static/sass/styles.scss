@@ -1,5 +1,7 @@
 @charset "utf-8";
 
+// Requires bulma and node-sass to be installed to generate the css file
+
 // Import font
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
 
@@ -14,14 +16,9 @@ $family-sans-serif: "Nunito", sans-serif;
 $primary: $hunter-green;
 $link: $fern-green;
 $info: $laurel-green;
-// $widescreen-enabled: false;
-// $fullhd-enabled: false;
 
 // Update component variables
 $body-background-color: $timberwolf;
-// $control-border-width: 2px;
-// $input-border-color: transparent;
-// $input-shadow: none;
 
 // Import from Bulma
 @import "../../../node_modules/bulma/sass/utilities/_all.sass";
