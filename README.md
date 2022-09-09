@@ -85,7 +85,11 @@ To run the app locally, the Python 3 must be installed, along with the following
 - python-dotenv
 - requests
 
-To do so, run `pip install -r requirements.txt`
+To do so, run:
+
+```bash
+pip install -r requirements.txt
+```
 
 ### npm
 
@@ -94,7 +98,11 @@ Optionally, the following npm dependencies can be installed to generate the CSS 
 - bulma
 - node-sass
 
-To do so, run `npm install`
+To do so, run:
+
+```bash
+npm install
+```
 
 ## Running
 
