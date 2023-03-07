@@ -8,7 +8,7 @@ A web app to identify birds in Singapore based on their features.
 
 - Identify a bird by answering at most 5 questions
 - Browse through the database of 400+ birds
-- View detailed information about each bird, including their photos
+- View detailed information about each bird
 - Admin page for editing the database of birds
 
 ## Usage
@@ -21,45 +21,52 @@ For admin login, the username is `admin-kgi` and the password is `iFE79iUd45`
 
 ```text
 .
-├── admin.py
-├── app.py
-├── auth.py
-├── Birds.sql
-├── browse.py
-├── errors.py
-├── general.py
-├── identify.py
-├── setup.py
-├── static
-│   ├── sass
-│   │   └── styles.scss
-│   └── stylesheets
-│       └── styles.css
-├── templates
-│   ├── admin
-│   │   ├── dashboard.html
-│   │   ├── delete_bird.html
-│   │   ├── new_bird.html
-│   │   └── update_bird.html
-│   ├── auth
-│   │   └── login_page.html
-│   ├── base.html
-│   ├── browse
-│   │   └── browse_birds.html
-│   ├── errors
-│   │   ├── page_not_found.html
-│   │   └── server_error.html
-│   ├── general
-│   │   ├── about.html
-│   │   └── index.html
-│   ├── identify
-│   │   ├── identify_bird.html
-│   │   ├── no_birds.html
-│   │   └── possible_birds.html
-│   └── viewbird
-│       ├── bird_info.html
-│       └── bird_not_found.html
-└── viewbird.py
+├── app
+│   ├── admin.py
+│   ├── app.py
+│   ├── auth.py
+│   ├── Birds.db
+│   ├── Birds.sql
+│   ├── browse.py
+│   ├── errors.py
+│   ├── general.py
+│   ├── identify.py
+│   ├── static
+│   │   ├── sass
+│   │   │   └── styles.scss
+│   │   └── stylesheets
+│   │       └── styles.css
+│   ├── templates
+│   │   ├── admin
+│   │   │   ├── dashboard.html
+│   │   │   ├── delete_bird.html
+│   │   │   ├── new_bird.html
+│   │   │   └── update_bird.html
+│   │   ├── auth
+│   │   │   └── login_page.html
+│   │   ├── base.html
+│   │   ├── browse
+│   │   │   └── browse_birds.html
+│   │   ├── errors
+│   │   │   ├── page_not_found.html
+│   │   │   └── server_error.html
+│   │   ├── general
+│   │   │   ├── about.html
+│   │   │   └── index.html
+│   │   ├── identify
+│   │   │   ├── identify_bird.html
+│   │   │   ├── no_birds.html
+│   │   │   └── possible_birds.html
+│   │   └── viewbird
+│   │       ├── bird_info.html
+│   │       └── bird_not_found.html
+│   └── viewbird.py
+├── Birds.db
+├── package.json
+├── package-lock.json
+├── README.md
+├── requirements.txt
+└── setup.py
 ```
 
 The app is split into 7 main parts or features:
