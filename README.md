@@ -11,12 +11,6 @@ A web app to identify birds in Singapore based on their features.
 - View detailed information about each bird
 - Admin page for editing the database of birds
 
-## Usage
-
-Go to the [website](https://jycx50.pythonanywhere.com). Refer to the about page for help.
-
-For admin login, the username is `admin-kgi` and the password is `iFE79iUd45`
-
 ## Project Structure
 
 ```text
@@ -83,6 +77,9 @@ Each main part has a corresponding Flask blueprint and folder with Jinja templat
 
 ## Prerequisites
 
+### Dev Container
+This project supports the Development Container Specification, simply open with a tool (e.g VSCode) that supports Dev Containers. Alternatively, install dependencies manually with the steps below.
+
 ### Python
 
 A virtual environment is recommended to be installed.
@@ -133,3 +130,9 @@ python3 app/app.py
 
 - [The Singapore Birds Project](https://singaporebirds.com/) - Database of local birds
 - [Bulma](https://bulma.io/) - CSS framework
+
+## To Do?
+- Include photos of birds
+- Don't hardcode db
+- Add Dockerfile
+- Pin dependencies
