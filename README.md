@@ -2,6 +2,9 @@
 
 ## About
 
+![homepage](images/homepage.png "Homepage") ![bird](images/screenshot-bird.png "Bird")
+![identify](images/screenshot-identify.png "Identify") ![database](images/screenshot-database.png "Database")
+
 A web app to identify birds in Singapore based on their features.
 
 ## Features
