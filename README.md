@@ -117,13 +117,21 @@ npm start
 
 ## Running
 
-If the app is running for the first time, run the `setup.py` script, and select "y" for both questions. The script generates and prints the admin credentials and initialises the database `Birds.db` from the `Birds.sql` file. It can also be run to reset the data in the database.
+If the app is running for the first time, run the `setup.py` script. The script generates and prints the admin credentials and initialises the database `Birds.db` from the `Birds.sql` file. It can also be run to reset the data in the database.
 
 Finally, run `app.py` to start the web app.
 
 ```bash
 python3 setup.py
 python3 app/app.py
+```
+
+### Docker
+Build and run the container.
+
+```bash
+docker build -t sgbfr .
+docker run --name sgbfr-app -p 5000:5000 sgbfr
 ```
 
 ## Credits
@@ -134,5 +142,4 @@ python3 app/app.py
 ## To Do?
 - Include photos of birds
 - Don't hardcode db
-- Add Dockerfile
 - Pin dependencies

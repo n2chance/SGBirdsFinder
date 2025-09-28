@@ -25,4 +25,4 @@ app.register_blueprint(browse_bp, url_prefix='/browse')
 app.register_blueprint(errorhandler_bp)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0", port=5000)

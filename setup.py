@@ -39,11 +39,5 @@ def initdb(sqlFileN,dbName):
     db.close()
     print("Database successfully created")
 
-inp = input("Generate credentials? (y/n): ")
-if inp == "y":
-    setupEnv()
-
-os.chdir("app")
-inp = input("Generate db? (y/n): ")
-if inp == 'y':
-    initdb("Birds.sql","Birds.db")
+setupEnv()
+initdb("app/Birds.sql","app/Birds.db")
